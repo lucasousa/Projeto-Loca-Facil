@@ -1,7 +1,6 @@
-class Person(object):
-	# __slots__ = ['__name', '__cpf', '__telephone', '__email']
+class Person():
 	def __init__(self):
-		self.__name         = None
+		self.__name        = None
 		self.__cpf         = None
 		self.__telephone   = None
 		self.__email       = None
@@ -43,6 +42,12 @@ class Person(object):
 	def email(self, email):
 		self.__email = email
 
+	def Register(self, name, cpf, telephone, email):
+		self.__name = name
+		self.__cpf = cpf
+		self.__telephone = telephone
+		self.__email = email
+
 	def printPerson(self):
 		cpf = self.__cpf
 		print('Nome: {}'.format(self.__name))
@@ -56,17 +61,17 @@ class Person(object):
 #classe Aluguel
 class Rent(object):
 	__id = 0
-	# __slots__ = ['__desc', '__sit', '__street', '__number', '__complement', '__cep','__price', '__quality','__id', '_Rent__id']
 	def __init__(self):
-		self.__desc        = None
-		self.__sit         = None
-		self.__street      = None
-		self.__number      = None
-		self.__complement  = None
-		self.__cep         = None
-		self.__price       = None
-		self.__quality     = None
-		self.__id          = Rent.__id 
+		self.__desc         = None
+		self.__neighborhood = None
+		self.__sit          = None #
+		self.__street       = None 
+		self.__number       = None
+		self.__complement   = None
+		self.__cep          = None
+		self.__price        = None
+		self.__quality      = None #
+		self.__id           = Rent.__id #
 		Rent.__id += 1
 
 	@property
@@ -151,7 +156,6 @@ class Rent(object):
 
 class Renter(Person):
 	__id = 0
-	# __slots__ = ['__id', '__rent','_Renter__id']
 	def __init__(self):
 		self.__id        = Renter.__id
 		self.__rent      = None
@@ -170,11 +174,6 @@ class Renter(Person):
 
 class User(Person):
 	__id = 0 
-	# _slots_ = ['__id', '__user']
 	def __init__(self):
 		self.__id      = User.__id 
 		User.__id     += 1		
-	
-
-print("Teste--------")
-print("Teste--------")
