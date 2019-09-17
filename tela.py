@@ -166,11 +166,56 @@ class Ui_MainWindow(object):
 
     def funcionalidades(self):
         self.pushButton_2.clicked.connect(self.cadastrar)
+        self.pushButton_3.clicked.connect(self.buscar)
+        self.pushButton_4.clicked.connect(self.alterar)
+        self.pushButton.clicked.connect(self.listar)
+        
+    def listar(self):
+        pass
+        
+    
+    def alterar(self):
+        global Clientes
+        cpf_busca = self.lineEdit_6.text()
+        encontrado = False
+        for x in Clientes:
+            if(x.cpf == cpf_busca):
+                encontrado = True
+                x.nome = self.lineEdit_7.text()
+                x.endereco = self.lineEdit_8.text()
+                x.cep = self.lineEdit_9.text()
+                x.telefone = self.lineEdit_10.text()
+                QtWidgets.QMessageBox.about(None, "Alteração", "Alterações realizadas com sucesso!",)
+        if not encontrado:
+            QtWidgets.QMessageBox.about(None, "Alteração", "CPF não encontrado!",)
+            
+    
+    def buscar(self):
+        global Clientes
+        cpf_busca = self.lineEdit_6.text()
+        encontrado = False
+        for x in Clientes:
+            if(x.cpf == cpf_busca):
+                encontrado = True
+                self.lineEdit_7.setText(x.nome)
+                self.lineEdit_8.setText(x.endereco)
+                self.lineEdit_9.setText(x.cep)
+                self.lineEdit_10.setText(x.telefone)
+        if(not encontrado):
+            QtWidgets.QMessageBox.about(None, "Busca", "Valor de CPF não encontrado",)
+
+
+
 
     def cadastrar(self):
         nome  = self.lineEdit.text()
         cpf = self.lineEdit_2.text()
-        cl = Cliente(nome, cpf, self.lineEdit_3.text(), self.lineEdit_4.text(), self.lineEdit_5.text())
+        endereco = self.lineEdit_3.text()
+        CEP =  self.lineEdit_4.text()
+        Telefone = self.lineEdit_5.text()
+        global Clientes
+        cl = Cliente(nome, cpf, endereco, CEP , Telefone)
+        Clientes.append(cl)
         if(self.cd.verifica_cadastro(cl.cpf)):
             self.cd.cadastra(cl)
             QtWidgets.QMessageBox.about(None, "Cadastro", "Cliente cadastrado com sucesso!",)
@@ -179,7 +224,6 @@ class Ui_MainWindow(object):
         print(self.cd.getTotal())
 
     def mostraTodos(self):
-        
         print(self.cl)
 
     def retranslateUi(self, MainWindow):
@@ -202,7 +246,7 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Mostrar"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Mostrar Todos"))
 
-
+Clientes = []
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
