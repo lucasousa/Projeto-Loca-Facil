@@ -2,6 +2,7 @@ class Person():
 	def __init__(self):
 		self.__name        = None
 		self.__cpf         = None
+		self.__sex		   = None	
 		self.__telephone   = None
 		self.__email       = None
 
@@ -11,9 +12,18 @@ class Person():
 	@name.setter
 	def name(self, name):
 		if(len(name)<10 or len(name)>50):
-			print("Nome inválido. ")
+			raise ValueError
 		else:
 			self.__name = name
+	
+	@property
+	def sex(self):
+		return self.__sex
+	@sex.setter
+	def sex(self, sexo):
+		if(len(sexo) <= 9 and len(sexo)>=8):
+			self.__sex = sexo.lower()
+		else: raise ValueError
 
 	@property
 	def cpf(self):
@@ -31,7 +41,7 @@ class Person():
 	@telephone.setter
 	def telephone(self, telephone):
 		if(len(telephone)<11 or len(telephone)>11):
-			print("Telefone inválido.")
+			raise ValueError
 		else:
 			self.__telephone = telephone
 	
@@ -103,7 +113,7 @@ class Rent(object):
 	@number.setter
 	def number(self,n):
 		if(type(n)!= int):
-			print('Número inválido')
+			raise ValueError
 		else:
 			self.__number = n
 	@property
@@ -134,7 +144,7 @@ class Rent(object):
 	@quality.setter
 	def quality(self, q):
 		if(float(q)<0.0 or float(q)>5.0):
-			q = float(input("Qualidade inválida. Digite um valor no intervalo de [0.0 - 5.0] "))
+			raise ValueError
 		else:
 			self.__quality = q
 			
