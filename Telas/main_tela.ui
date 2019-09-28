@@ -21,9 +21,9 @@ border-color: rgb(255, 255, 255);</string>
    <widget class="QToolButton" name="toolButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>150</width>
+      <x>27</x>
+      <y>0</y>
+      <width>170</width>
       <height>41</height>
      </rect>
     </property>
@@ -36,20 +36,20 @@ border-color: rgb(255, 255, 255);</string>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
 font: 75 11pt &quot;Gadugi&quot;;
-background-color: rgb(8, 61, 119);
-border-radius: 10px;
+background-color: #662C91;
+
 </string>
     </property>
     <property name="text">
      <string>Cadastrar Imóvel</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton_2">
+   <widget class="QToolButton" name="toolButton_3">
     <property name="geometry">
      <rect>
-      <x>328</x>
-      <y>30</y>
-      <width>150</width>
+      <x>196</x>
+      <y>0</y>
+      <width>180</width>
       <height>41</height>
      </rect>
     </property>
@@ -62,20 +62,72 @@ border-radius: 10px;
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
 font: 75 11pt &quot;Gadugi&quot;;
-background-color: rgb(8, 61, 119);
-border-radius: 10px;
+background-color: #662C91;
+
+</string>
+    </property>
+    <property name="text">
+     <string>Ver Imóveis</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_4">
+    <property name="geometry">
+     <rect>
+      <x>376</x>
+      <y>0</y>
+      <width>180</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>150</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+font: 75 11pt &quot;Gadugi&quot;;
+background-color: #662C91;
+
+</string>
+    </property>
+    <property name="text">
+     <string>Contato</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_5">
+    <property name="geometry">
+     <rect>
+      <x>556</x>
+      <y>0</y>
+      <width>180</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>150</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+font: 75 11pt &quot;Gadugi&quot;;
+background-color: #662C91;
+
 </string>
     </property>
     <property name="text">
      <string>Sobre</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton_3">
+   <widget class="QToolButton" name="toolButton_6">
     <property name="geometry">
      <rect>
-      <x>174</x>
-      <y>30</y>
-      <width>151</width>
+      <x>736</x>
+      <y>0</y>
+      <width>180</width>
       <height>41</height>
      </rect>
     </property>
@@ -88,38 +140,12 @@ border-radius: 10px;
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
 font: 75 11pt &quot;Gadugi&quot;;
-background-color: rgb(8, 61, 119);
-border-radius: 10px;
+background-color: #662C91;
+
 </string>
     </property>
     <property name="text">
-     <string>Visualizar Imóveis</string>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="toolButton_4">
-    <property name="geometry">
-     <rect>
-      <x>481</x>
-      <y>30</y>
-      <width>151</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>150</width>
-      <height>40</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-font: 75 11pt &quot;Gadugi&quot;;
-background-color: rgb(8, 61, 119);
-border-radius: 10px;
-</string>
-    </property>
-    <property name="text">
-     <string>Contato</string>
+     <string>Buscar</string>
     </property>
    </widget>
   </widget>

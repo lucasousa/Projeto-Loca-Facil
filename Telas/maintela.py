@@ -19,41 +19,50 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.toolButton = QtWidgets.QToolButton(self.centralwidget)
-        self.toolButton.setGeometry(QtCore.QRect(20, 30, 150, 41))
+        self.toolButton.setGeometry(QtCore.QRect(27, 0, 170, 41))
         self.toolButton.setMinimumSize(QtCore.QSize(150, 40))
         self.toolButton.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 75 11pt \"Gadugi\";\n"
-"background-color: rgb(8, 61, 119);\n"
-"border-radius: 10px;\n"
+"background-color: #662C91;\n"
+"\n"
 "")
         self.toolButton.setObjectName("toolButton")
-        self.toolButton_2 = QtWidgets.QToolButton(self.centralwidget)
-        self.toolButton_2.setGeometry(QtCore.QRect(328, 30, 150, 41))
-        self.toolButton_2.setMinimumSize(QtCore.QSize(150, 40))
-        self.toolButton_2.setStyleSheet("color: rgb(255, 255, 255);\n"
-"font: 75 11pt \"Gadugi\";\n"
-"background-color: rgb(8, 61, 119);\n"
-"border-radius: 10px;\n"
-"")
-        self.toolButton_2.setObjectName("toolButton_2")
         self.toolButton_3 = QtWidgets.QToolButton(self.centralwidget)
-        self.toolButton_3.setGeometry(QtCore.QRect(174, 30, 151, 41))
+        self.toolButton_3.setGeometry(QtCore.QRect(196, 0, 180, 41))
         self.toolButton_3.setMinimumSize(QtCore.QSize(150, 40))
         self.toolButton_3.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 75 11pt \"Gadugi\";\n"
-"background-color: rgb(8, 61, 119);\n"
-"border-radius: 10px;\n"
+"background-color: #662C91;\n"
+"\n"
 "")
         self.toolButton_3.setObjectName("toolButton_3")
         self.toolButton_4 = QtWidgets.QToolButton(self.centralwidget)
-        self.toolButton_4.setGeometry(QtCore.QRect(481, 30, 151, 41))
+        self.toolButton_4.setGeometry(QtCore.QRect(376, 0, 180, 41))
         self.toolButton_4.setMinimumSize(QtCore.QSize(150, 40))
         self.toolButton_4.setStyleSheet("color: rgb(255, 255, 255);\n"
 "font: 75 11pt \"Gadugi\";\n"
-"background-color: rgb(8, 61, 119);\n"
-"border-radius: 10px;\n"
+"background-color: #662C91;\n"
+"\n"
 "")
         self.toolButton_4.setObjectName("toolButton_4")
+        self.toolButton_5 = QtWidgets.QToolButton(self.centralwidget)
+        self.toolButton_5.setGeometry(QtCore.QRect(556, 0, 180, 41))
+        self.toolButton_5.setMinimumSize(QtCore.QSize(150, 40))
+        self.toolButton_5.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 75 11pt \"Gadugi\";\n"
+"background-color: #662C91;\n"
+"\n"
+"")
+        self.toolButton_5.setObjectName("toolButton_5")
+        self.toolButton_6 = QtWidgets.QToolButton(self.centralwidget)
+        self.toolButton_6.setGeometry(QtCore.QRect(736, 0, 180, 41))
+        self.toolButton_6.setMinimumSize(QtCore.QSize(150, 40))
+        self.toolButton_6.setStyleSheet("color: rgb(255, 255, 255);\n"
+"font: 75 11pt \"Gadugi\";\n"
+"background-color: #662C91;\n"
+"\n"
+"")
+        self.toolButton_6.setObjectName("toolButton_6")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -66,9 +75,10 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.toolButton.setText(_translate("MainWindow", "Cadastrar Imóvel"))
-        self.toolButton_2.setText(_translate("MainWindow", "Sobre"))
-        self.toolButton_3.setText(_translate("MainWindow", "Visualizar Imóveis"))
+        self.toolButton_3.setText(_translate("MainWindow", "Ver Imóveis"))
         self.toolButton_4.setText(_translate("MainWindow", "Contato"))
+        self.toolButton_5.setText(_translate("MainWindow", "Sobre"))
+        self.toolButton_6.setText(_translate("MainWindow", "Buscar"))
 
 
 if __name__ == "__main__":
