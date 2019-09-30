@@ -10,7 +10,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
+class Ui_telainicial(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -37,7 +37,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.pushButton.setFont(font)
         self.pushButton.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(52, 89, 149);")
+"background-color: rgb(52, 89, 149);\nborder-radius: 10px;\n")
         self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(430, 310, 150, 60))
@@ -48,7 +48,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(52, 89, 149);")
+"background-color: rgb(52, 89, 149);\nborder-radius: 10px;\n")
         self.pushButton_2.setObjectName("pushButton_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
