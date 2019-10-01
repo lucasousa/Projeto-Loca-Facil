@@ -187,3 +187,14 @@ class User(Person):
 	def __init__(self):
 		self.__id      = User.__id 
 		User.__id     += 1		
+	
+	def RegUser(self, Username, passwd):
+		self.__username = Username
+		self.__passwd  = passwd
+
+	@property
+	def username(self):
+		return self.__username
+	@property
+	def passwd(self):
+		return self.__passwd
