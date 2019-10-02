@@ -2,45 +2,17 @@ import socket
 import time
 class Conex():
 	def __init__(self):
-		self.host = 'localhost'
-		self.port = 3000
+		self.host = '10.180.61.80'
+		self.port = 7000
 		self.address=((self.host,self.port))
 		self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 		self.client_socket.connect(self.address)
 
-	def connect(self):
-		connected = True
-		try:
-			self.client_socket.connect(self.address)
-		except:
-			connected = self.reestablish_connection()
-		return connected
-
-
-	def reestablish_connection(self):
-		connection_attempt = 0
-		connected = False
-		while(connection_attempt<5):
-			try:
-				print("try connection...")
-				time.sleep(5)
-				self.client_socket.connect(self.address)
-				connected = True
-				break
-			except:
-				connection_attempt+=1
-		return connected
-
-
-	def sendMessage(self,content):
-				
+	def sendMessage(self,content):	
 		self.client_socket.send(content.encode()) 
-		# Return error/success and message
-		if self.client_socket.recv(1024).decode() == "error":
-			return False
-		else:
-			return True
-		
+	
+	def receiveMessage(self):
+		return self.client_socket.recv(1024).decode()
 
 	def closeConnection(self):
 		self.client_socket.close()
