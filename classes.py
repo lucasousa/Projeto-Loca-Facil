@@ -84,6 +84,17 @@ class Rent(object):
 		self.__id           = Rent.__id #
 		Rent.__id += 1
 
+	def registerRent(self, desc, neighborhood, street, number, complement, cep, price):
+		self.__desc         = desc
+		self.__neighborhood = neighborhood
+		self.__sit          = True
+		self.__street       = street 
+		self.__number       = number
+		self.__complement   = complement
+		self.__cep          = cep
+		self.__price        = price
+		self.__quality      = float(0)
+
 	@property
 	def description(self):
 		return self.desc
