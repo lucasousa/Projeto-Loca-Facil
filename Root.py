@@ -12,6 +12,8 @@ import os
 from PyQt5.QtCore import pyqtSlot
 from classes import Person, Rent, Renter, User
 from Comunicacao import Conex
+import threading
+from ast import literal_eval
 
 Users = []
 
@@ -52,6 +54,7 @@ class Ui_Main(QtWidgets.QWidget):
 
 class Main(QMainWindow, Ui_Main):
     def __init__(self, parent=None):
+        self.conexao = Conex()
         super(Main, self).__init__(parent)
         self.setupUi(self)
         
@@ -70,10 +73,10 @@ class Main(QMainWindow, Ui_Main):
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario) #Cadastrar
         #self.tela_cadastro_usuario.pushButton.clicked.connect(self.AbrirTelaPrincipal) #Cadastrar 
         #Cadastro Imóvel
-        self.tela_cadastro_imovel.pushButton.clicked.connect(self.AbrirTelaPrincipal) #Cadastrar
+        self.tela_cadastro_imovel.pushButton.clicked.connect(self.CadastrarImovel) #Cadastrar
     
     def Erro(self):
-        QtWidgets.QMessageBox.about(None, "Função em desenvolvimento")
+        QtWidgets.QMessageBox.about(None, "Erro","Função em desenvolvimento")
 
     
     def AbrirTelaInicial(self):
@@ -87,6 +90,25 @@ class Main(QMainWindow, Ui_Main):
     def AbrirTelaCadImovel(self):
         self.QtStack.setCurrentIndex(4)
 
+
+    def CadastrarImovel(self):
+        dicio = {}
+        dicio['desc'] = self.tela_cadastro_imovel.lineEdit_10.text()
+        dicio['bairro'] = self.tela_cadastro_imovel.lineEdit_5.text()
+        dicio['rua'] = self.tela_cadastro_imovel.lineEdit_7.text()
+        dicio['numero'] = self.tela_cadastro_imovel.lineEdit_9.text()
+        dicio['complemento'] = self.tela_cadastro_imovel.lineEdit_8.text()
+        dicio['cep'] = self.tela_cadastro_imovel.lineEdit_6.text()
+        dicio['preço'] = self.tela_cadastro_imovel.lineEdit_5.text()
+        dicio['cpf'] = self.tela_cadastro_imovel.lineEdit_12.text()
+        #Guardando as informações da tela em um dicionário
+        if():
+            pass
+        #verificações para o cadastro
+
+    def Contato(self):
+        pass
+
     def CadastrarUsuario(self):
         nome = self.tela_cadastro_usuario.lineEdit_5.text()
         cpf = self.tela_cadastro_usuario.lineEdit_7.text()
@@ -99,12 +121,21 @@ class Main(QMainWindow, Ui_Main):
         user = self.tela_cadastro_usuario.lineEdit_11.text()
         if(self.tela_cadastro_usuario.lineEdit_10.text() == self.tela_cadastro_usuario.lineEdit_12.text()):
             senha = self.tela_cadastro_usuario.lineEdit_10.text()
+            dicio = {}
+            dicio['nome'] = nome
+            dicio['cpf'] = cpf
+            dicio['telefone'] = telefone
+            dicio['email'] = email
+            dicio['sexo'] = sexo
+            dicio['user'] = user
+            dicio['senha'] = senha
             global Users
             usuario = User()
             usuario.Register(nome,cpf,telefone,email)
             usuario.RegUser(user,senha)
             self.AbrirTelaInicial()
-            Conex().sendMessage("Um usuário se cadastrou")
+            self.conexao.sendMessage(str(dicio))
+            QtWidgets.QMessageBox.about(None, 'Importante', self.conexao.receiveMessage())
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas não coincidem')
         
