@@ -14,11 +14,13 @@ class Ui_login(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(921, 631)
-        MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonFollowStyle)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(220, 110, 381, 71))
+        self.label.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.label.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(0, 0, 0);\n"
 "font: 75 12pt \"Gadugi\";\n"
@@ -59,16 +61,19 @@ class Ui_login(object):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton.setFont(font)
+        self.pushButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.pushButton.setStyleSheet("background-color: #0A8754;\n"
 "color: #FFFFFF;")
         self.pushButton.setObjectName("pushButton")
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(220, 360, 151, 20))
-        self.label_2.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.label_2.setStyleSheet("color: rgb(255, 0, 127);\n"
+        self.toolButton = QtWidgets.QToolButton(self.centralwidget)
+        self.toolButton.setGeometry(QtCore.QRect(211, 360, 161, 21))
+        self.toolButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.toolButton.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.toolButton.setStyleSheet("color: rgb(255, 0, 127);\n"
 "font: 63 9pt \"Segoe UI Semibold\";\n"
-"text-decoration: underline;")
-        self.label_2.setObjectName("label_2")
+"text-decoration: underline;\n"
+"border: none;")
+        self.toolButton.setObjectName("toolButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -84,7 +89,7 @@ class Ui_login(object):
         self.label_5.setText(_translate("MainWindow", "Usuário"))
         self.label_6.setText(_translate("MainWindow", "Senha"))
         self.pushButton.setText(_translate("MainWindow", "Entrar"))
-        self.label_2.setText(_translate("MainWindow", "Esqueceu sua senha?"))
+        self.toolButton.setText(_translate("MainWindow", "Esqueceu sua senha?"))
 
 
 if __name__ == "__main__":

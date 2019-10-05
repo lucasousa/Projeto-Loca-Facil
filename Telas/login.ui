@@ -11,10 +11,13 @@
    </rect>
   </property>
   <property name="cursor">
-   <cursorShape>PointingHandCursor</cursorShape>
+   <cursorShape>ArrowCursor</cursorShape>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonFollowStyle</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -25,6 +28,9 @@
       <width>381</width>
       <height>71</height>
      </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
@@ -122,6 +128,9 @@ font: 75 12pt &quot;Gadugi&quot;;
       <bold>true</bold>
      </font>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
      <string notr="true">background-color: #0A8754;
 color: #FFFFFF;</string>
@@ -130,22 +139,26 @@ color: #FFFFFF;</string>
      <string>Entrar</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QToolButton" name="esqueceu_senha">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>211</x>
       <y>360</y>
-      <width>151</width>
-      <height>20</height>
+      <width>161</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 0, 127);
 font: 63 9pt &quot;Segoe UI Semibold&quot;;
-text-decoration: underline;</string>
+text-decoration: underline;
+border: none;</string>
     </property>
     <property name="text">
      <string>Esqueceu sua senha?</string>
