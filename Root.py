@@ -82,6 +82,8 @@ class Main(QMainWindow, Ui_Main):
         self.tela_principal.toolButton_4.clicked.connect(self.AbrirTelaContato) #Contato
     
         self.tela_contato.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Botão voltar (tela principal)
+        self.tela_cadastro_imovel.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Botão voltar (tela principal)
+        
         self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin) #Link para recuperar Login
 
         #cadastro Usuário
