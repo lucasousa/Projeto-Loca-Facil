@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>898</width>
+    <width>1059</width>
     <height>792</height>
    </rect>
   </property>
@@ -20,7 +20,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>440</x>
       <y>30</y>
       <width>201</width>
       <height>61</height>
@@ -44,7 +44,7 @@
    <widget class="QLineEdit" name="lineEdit_5">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>300</x>
       <y>200</y>
       <width>601</width>
       <height>31</height>
@@ -54,7 +54,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>190</x>
       <y>194</y>
       <width>59</width>
       <height>40</height>
@@ -75,7 +75,7 @@
    <widget class="QLineEdit" name="lineEdit_6">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>300</x>
       <y>300</y>
       <width>241</width>
       <height>31</height>
@@ -85,7 +85,7 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>190</x>
       <y>145</y>
       <width>59</width>
       <height>40</height>
@@ -106,7 +106,7 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>190</x>
       <y>296</y>
       <width>59</width>
       <height>40</height>
@@ -127,7 +127,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>433</x>
+      <x>573</x>
       <y>294</y>
       <width>59</width>
       <height>40</height>
@@ -148,7 +148,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>49</x>
+      <x>189</x>
       <y>242</y>
       <width>111</width>
       <height>40</height>
@@ -169,7 +169,7 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>190</x>
       <y>414</y>
       <width>101</width>
       <height>40</height>
@@ -190,7 +190,7 @@
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>190</x>
       <y>346</y>
       <width>59</width>
       <height>40</height>
@@ -211,7 +211,7 @@
    <widget class="QLineEdit" name="lineEdit_7">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>300</x>
       <y>150</y>
       <width>601</width>
       <height>31</height>
@@ -221,7 +221,7 @@
    <widget class="QLineEdit" name="lineEdit_8">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>300</x>
       <y>250</y>
       <width>601</width>
       <height>31</height>
@@ -231,7 +231,7 @@
    <widget class="QLineEdit" name="lineEdit_9">
     <property name="geometry">
      <rect>
-      <x>510</x>
+      <x>650</x>
       <y>300</y>
       <width>251</width>
       <height>31</height>
@@ -241,7 +241,7 @@
    <widget class="QLineEdit" name="lineEdit_10">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>300</x>
       <y>400</y>
       <width>601</width>
       <height>81</height>
@@ -251,7 +251,7 @@
    <widget class="QLineEdit" name="lineEdit_11">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>300</x>
       <y>350</y>
       <width>241</width>
       <height>31</height>
@@ -261,7 +261,7 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>480</x>
       <y>620</y>
       <width>131</width>
       <height>41</height>
@@ -295,7 +295,7 @@ color: #FFFFFF;</string>
    <widget class="QLineEdit" name="lineEdit_12">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>300</x>
       <y>560</y>
       <width>241</width>
       <height>31</height>
@@ -305,7 +305,7 @@ color: #FFFFFF;</string>
    <widget class="QLabel" name="label_12">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>370</x>
       <y>500</y>
       <width>441</width>
       <height>40</height>
@@ -326,7 +326,7 @@ color: #FFFFFF;</string>
    <widget class="QLabel" name="label_13">
     <property name="geometry">
      <rect>
-      <x>53</x>
+      <x>193</x>
       <y>557</y>
       <width>59</width>
       <height>40</height>
@@ -342,6 +342,29 @@ color: #FFFFFF;</string>
     </property>
     <property name="text">
      <string>CPF</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>40</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../exemplo/telas/images/back_12955.png</normaloff>../../exemplo/telas/images/back_12955.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>28</width>
+      <height>28</height>
+     </size>
     </property>
    </widget>
   </widget>
