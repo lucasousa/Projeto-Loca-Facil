@@ -5,6 +5,8 @@ from Telas.login import Ui_login
 from Telas.maintela import Ui_maintela
 from Telas.cadastroimovel import Ui_cadastroimovel
 from Telas.cadastrousuario import Ui_cadastrousuario
+from Telas.contato import Ui_contato
+from Telas.recuperar_login import Ui_recuperar_login
 from PyQt5.QtGui import QPixmap
 import PyQt5
 import sys
@@ -29,6 +31,8 @@ class Ui_Main(QtWidgets.QWidget):
         self.stack2 = QtWidgets.QMainWindow()
         self.stack3 = QtWidgets.QMainWindow()
         self.stack4 = QtWidgets.QMainWindow()
+        self.stack5 = QtWidgets.QMainWindow()
+        self.stack6 = QtWidgets.QMainWindow()
 
         self.tela_inicio = Ui_telainicial()
         self.tela_inicio.setupUi(self.stack0)
@@ -45,16 +49,24 @@ class Ui_Main(QtWidgets.QWidget):
         self.tela_cadastro_imovel = Ui_cadastroimovel()
         self.tela_cadastro_imovel.setupUi(self.stack4)
 
+        self.tela_contato = Ui_contato()
+        self.tela_contato.setupUi(self.stack5)
+
+        self.tela_recuperar_login = Ui_recuperar_login()
+        self.tela_recuperar_login.setupUi(self.stack6)
+
         self.QtStack.addWidget(self.stack0) #Tela inicial
         self.QtStack.addWidget(self.stack1) #Tela login
         self.QtStack.addWidget(self.stack2) #Tela principal
         self.QtStack.addWidget(self.stack3) #Tela Cadastro de Usuário
         self.QtStack.addWidget(self.stack4) #Tela Cadastro de Imóvel
+        self.QtStack.addWidget(self.stack5) #Tela de contato
+        self.QtStack.addWidget(self.stack6) #Tela de recuperar login
 
 
 class Main(QMainWindow, Ui_Main):
     def __init__(self, parent=None):
-        self.conexao = Conex()
+        # self.conexao = Conex() #Socket comentado
         super(Main, self).__init__(parent)
         self.setupUi(self)
         
@@ -66,9 +78,12 @@ class Main(QMainWindow, Ui_Main):
         #Main tela
         self.tela_principal.toolButton.clicked.connect(self.AbrirTelaCadImovel) #Cadastrar Imóvel
         self.tela_principal.toolButton_3.clicked.connect(self.Erro) #Visualizar Imóveis
-        self.tela_principal.toolButton_4.clicked.connect(self.Erro) #Sobre
-        self.tela_principal.toolButton_5.clicked.connect(self.Erro) #Contato
-        self.tela_principal.toolButton_6.clicked.connect(self.Erro) #Contato
+        self.tela_principal.toolButton_5.clicked.connect(self.Erro) #Sobre
+        self.tela_principal.toolButton_4.clicked.connect(self.AbrirTelaContato) #Contato
+    
+        self.tela_contato.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Botão voltar (tela principal)
+        self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin) #Link para recuperar Login
+
         #cadastro Usuário
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario) #Cadastrar
         #self.tela_cadastro_usuario.pushButton.clicked.connect(self.AbrirTelaPrincipal) #Cadastrar 
@@ -89,6 +104,10 @@ class Main(QMainWindow, Ui_Main):
         self.QtStack.setCurrentIndex(3)
     def AbrirTelaCadImovel(self):
         self.QtStack.setCurrentIndex(4)
+    def AbrirTelaContato(self):
+        self.QtStack.setCurrentIndex(5)
+    def AbrirTelaRecuperarLogin(self):
+        self.QtStack.setCurrentIndex(6)
 
 
     def CadastrarImovel(self):
@@ -134,10 +153,13 @@ class Main(QMainWindow, Ui_Main):
             usuario.Register(nome,cpf,telefone,email)
             usuario.RegUser(user,senha)
             self.AbrirTelaInicial()
-            self.conexao.sendMessage(str(dicio))
-            QtWidgets.QMessageBox.about(None, 'Importante', self.conexao.receiveMessage())
-        else:
-            QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas não coincidem')
+            
+            ########### socket comentado #############
+
+            # self.conexao.sendMessage(str(dicio)) 
+            # QtWidgets.QMessageBox.about(None, 'Importante', self.conexao.receiveMessage())
+        # else:
+            # QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas não coincidem')
         
 
 
