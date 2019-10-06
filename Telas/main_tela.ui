@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>943</width>
-    <height>600</height>
+    <width>1006</width>
+    <height>611</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,9 +21,9 @@ border-color: rgb(255, 255, 255);</string>
    <widget class="QToolButton" name="toolButton">
     <property name="geometry">
      <rect>
-      <x>27</x>
-      <y>0</y>
-      <width>170</width>
+      <x>53</x>
+      <y>5</y>
+      <width>150</width>
       <height>41</height>
      </rect>
     </property>
@@ -35,8 +35,10 @@ border-color: rgb(255, 255, 255);</string>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-font: 75 11pt &quot;Gadugi&quot;;
+font: 75 9pt &quot;Gadugi&quot;;
 background-color: #662C91;
+border-sizing: 1px;
+
 
 </string>
     </property>
@@ -47,9 +49,9 @@ background-color: #662C91;
    <widget class="QToolButton" name="toolButton_3">
     <property name="geometry">
      <rect>
-      <x>196</x>
-      <y>0</y>
-      <width>180</width>
+      <x>203</x>
+      <y>5</y>
+      <width>150</width>
       <height>41</height>
      </rect>
     </property>
@@ -61,8 +63,12 @@ background-color: #662C91;
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-font: 75 11pt &quot;Gadugi&quot;;
+font: 75 9pt &quot;Gadugi&quot;;
 background-color: #662C91;
+border-sizing: 1px;
+hover{
+	color: pink;
+}
 
 </string>
     </property>
@@ -73,9 +79,9 @@ background-color: #662C91;
    <widget class="QToolButton" name="toolButton_4">
     <property name="geometry">
      <rect>
-      <x>376</x>
-      <y>0</y>
-      <width>180</width>
+      <x>353</x>
+      <y>5</y>
+      <width>150</width>
       <height>41</height>
      </rect>
     </property>
@@ -87,8 +93,12 @@ background-color: #662C91;
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-font: 75 11pt &quot;Gadugi&quot;;
+font: 75 9pt &quot;Gadugi&quot;;
 background-color: #662C91;
+border-sizing: 1px;
+hover{
+	color: pink;
+}
 
 </string>
     </property>
@@ -99,9 +109,9 @@ background-color: #662C91;
    <widget class="QToolButton" name="toolButton_5">
     <property name="geometry">
      <rect>
-      <x>556</x>
-      <y>0</y>
-      <width>180</width>
+      <x>503</x>
+      <y>5</y>
+      <width>150</width>
       <height>41</height>
      </rect>
     </property>
@@ -113,8 +123,12 @@ background-color: #662C91;
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-font: 75 11pt &quot;Gadugi&quot;;
+font: 75 9pt &quot;Gadugi&quot;;
 background-color: #662C91;
+border-sizing: 1px;
+hover{
+	color: pink;
+}
 
 </string>
     </property>
@@ -125,9 +139,9 @@ background-color: #662C91;
    <widget class="QToolButton" name="toolButton_6">
     <property name="geometry">
      <rect>
-      <x>736</x>
-      <y>0</y>
-      <width>180</width>
+      <x>653</x>
+      <y>5</y>
+      <width>150</width>
       <height>41</height>
      </rect>
     </property>
@@ -139,13 +153,63 @@ background-color: #662C91;
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
-font: 75 11pt &quot;Gadugi&quot;;
+font: 75 9pt &quot;Gadugi&quot;;
 background-color: #662C91;
+border-sizing: 1px;
+hover{
+	color: pink;
+}
 
 </string>
     </property>
     <property name="text">
      <string>Buscar</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_2">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>0</y>
+      <width>101</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../exemplo/telas/images/back_12955.png</normaloff>../../exemplo/telas/images/back_12955.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>28</width>
+      <height>28</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>60</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Encerrar Sessão&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
   </widget>
