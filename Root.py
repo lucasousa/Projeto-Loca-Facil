@@ -6,6 +6,7 @@ from Telas.maintela import Ui_maintela
 from Telas.cadastroimovel import Ui_cadastroimovel
 from Telas.cadastrousuario import Ui_cadastrousuario
 from Telas.contato import Ui_contato
+from Telas.sobre import Ui_Sobre
 from Telas.recuperar_login import Ui_recuperar_login
 from PyQt5.QtGui import QPixmap
 import PyQt5
@@ -33,6 +34,7 @@ class Ui_Main(QtWidgets.QWidget):
         self.stack4 = QtWidgets.QMainWindow()
         self.stack5 = QtWidgets.QMainWindow()
         self.stack6 = QtWidgets.QMainWindow()
+        self.stack7 = QtWidgets.QMainWindow()
 
         self.tela_inicio = Ui_telainicial()
         self.tela_inicio.setupUi(self.stack0)
@@ -55,6 +57,9 @@ class Ui_Main(QtWidgets.QWidget):
         self.tela_recuperar_login = Ui_recuperar_login()
         self.tela_recuperar_login.setupUi(self.stack6)
 
+        self.tela_sobre = Ui_Sobre()
+        self.tela_sobre.setupUi(self.stack7)
+
         self.QtStack.addWidget(self.stack0) #Tela inicial
         self.QtStack.addWidget(self.stack1) #Tela login
         self.QtStack.addWidget(self.stack2) #Tela principal
@@ -62,26 +67,36 @@ class Ui_Main(QtWidgets.QWidget):
         self.QtStack.addWidget(self.stack4) #Tela Cadastro de Imóvel
         self.QtStack.addWidget(self.stack5) #Tela de contato
         self.QtStack.addWidget(self.stack6) #Tela de recuperar login
+        self.QtStack.addWidget(self.stack7) #Tela de sobre
 
 
 class Main(QMainWindow, Ui_Main):
     def __init__(self, parent=None):
-        # self.conexao = Conex() #Socket comentado
+        try:
+            self.conexao = Conex('localhost', 7000) #Socket comentado
+        except:
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Não foi possível conectar ao servidor, tente novamente mais tarde')
+            exit(-1)
+
         super(Main, self).__init__(parent)
         self.setupUi(self)
         
         #Tela inicial
         self.tela_inicio.pushButton.clicked.connect(self.AbrirTelaCadUser) #Botão cadastrar
         self.tela_inicio.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Botão Login
+
         #login
-        self.tela_login.pushButton.clicked.connect(self.AbrirTelaPrincipal) #Botão Entrar 
+        self.tela_login.pushButton.clicked.connect(self.AbrirTelaPrincipal) #Botão Entrar
+
         #Main tela
         self.tela_principal.toolButton.clicked.connect(self.AbrirTelaCadImovel) #Cadastrar Imóvel
         self.tela_principal.toolButton_3.clicked.connect(self.Erro) #Visualizar Imóveis
-        self.tela_principal.toolButton_5.clicked.connect(self.Erro) #Sobre
         self.tela_principal.toolButton_4.clicked.connect(self.AbrirTelaContato) #Contato
-    
-        self.tela_contato.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Botão voltar (tela principal)
+        self.tela_principal.toolButton_5.clicked.connect(self.AbrirTelaSobre) #Sobre
+        self.tela_principal.toolButton_2.clicked.connect(self.AbrirTelaInicial) #Encerrar Sessão
+        self.tela_principal.toolButton_6.clicked.connect(self.Erro) #Buscar
+
+        self.tela_contato.toolButton.clicked.connect(self.AbrirTelaPrincipal)         #Botão voltar (tela principal)
         self.tela_cadastro_imovel.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Botão voltar (tela principal)
         
         self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin) #Link para recuperar Login
@@ -89,8 +104,12 @@ class Main(QMainWindow, Ui_Main):
         #cadastro Usuário
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario) #Cadastrar
         #self.tela_cadastro_usuario.pushButton.clicked.connect(self.AbrirTelaPrincipal) #Cadastrar 
+        
         #Cadastro Imóvel
         self.tela_cadastro_imovel.pushButton.clicked.connect(self.CadastrarImovel) #Cadastrar
+
+        #Sobre
+        self.tela_sobre.toolButton.clicked.connect(self.AbrirTelaPrincipal)
     
     def Erro(self):
         QtWidgets.QMessageBox.about(None, "Erro","Função em desenvolvimento")
@@ -110,6 +129,8 @@ class Main(QMainWindow, Ui_Main):
         self.QtStack.setCurrentIndex(5)
     def AbrirTelaRecuperarLogin(self):
         self.QtStack.setCurrentIndex(6)
+    def AbrirTelaSobre(self):
+        self.QtStack.setCurrentIndex(7)
 
 
     def CadastrarImovel(self):
@@ -123,8 +144,11 @@ class Main(QMainWindow, Ui_Main):
         dicio['preço'] = self.tela_cadastro_imovel.lineEdit_5.text()
         dicio['cpf'] = self.tela_cadastro_imovel.lineEdit_12.text()
         #Guardando as informações da tela em um dicionário
-        if():
+        if(len(dicio['cpf']!=11)):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
+        else:
             pass
+            
         #verificações para o cadastro
 
     def Contato(self):
@@ -140,7 +164,11 @@ class Main(QMainWindow, Ui_Main):
         else:
             sexo = 'Feminino'
         user = self.tela_cadastro_usuario.lineEdit_11.text()
-        if(self.tela_cadastro_usuario.lineEdit_10.text() == self.tela_cadastro_usuario.lineEdit_12.text()):
+        if(self.tela_cadastro_usuario.lineEdit_10.text() != self.tela_cadastro_usuario.lineEdit_12.text()):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas não coincidem')
+        elif len(cpf) != 11 :
+            QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
+        else:
             senha = self.tela_cadastro_usuario.lineEdit_10.text()
             dicio = {}
             dicio['nome'] = nome
@@ -157,14 +185,7 @@ class Main(QMainWindow, Ui_Main):
             self.AbrirTelaInicial()
             
             ########### socket comentado #############
-
-            # self.conexao.sendMessage(str(dicio)) 
-            # QtWidgets.QMessageBox.about(None, 'Importante', self.conexao.receiveMessage())
-        # else:
-            # QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas não coincidem')
-        
-
-
+            #self.conexao.sendMessage(str(dicio))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

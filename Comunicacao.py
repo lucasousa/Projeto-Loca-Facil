@@ -1,9 +1,9 @@
 import socket 
 import time
 class Conex():
-	def __init__(self):
-		self.host = '10.180.61.80'
-		self.port = 7000
+	def __init__(self, ip, port):
+		self.host = ip
+		self.port = port
 		self.address=((self.host,self.port))
 		self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 		self.client_socket.connect(self.address)
