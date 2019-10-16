@@ -73,7 +73,7 @@ class Ui_Main(QtWidgets.QWidget):
 class Main(QMainWindow, Ui_Main):
     def __init__(self, parent=None):
         try:
-            self.conexao = Conex('localhost', 7000) #Socket comentado
+            self.conexao = Conex('localhost', 7000)
         except:
             QtWidgets.QMessageBox.about(None, 'Erro', 'Não foi possível conectar ao servidor, tente novamente mais tarde')
             exit(-1)
@@ -103,7 +103,7 @@ class Main(QMainWindow, Ui_Main):
 
         #cadastro Usuário
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario) #Cadastrar
-        #self.tela_cadastro_usuario.pushButton.clicked.connect(self.AbrirTelaPrincipal) #Cadastrar 
+        self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
         
         #Cadastro Imóvel
         self.tela_cadastro_imovel.pushButton.clicked.connect(self.CadastrarImovel) #Cadastrar
@@ -144,12 +144,12 @@ class Main(QMainWindow, Ui_Main):
         dicio['preço'] = self.tela_cadastro_imovel.lineEdit_5.text()
         dicio['cpf'] = self.tela_cadastro_imovel.lineEdit_12.text()
         #Guardando as informações da tela em um dicionário
-        if(len(dicio['cpf']!=11)):
+        if(len(dicio['cpf'])!=11):
             QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
         else:
-            pass
+            self.conexao.sendMessage(str(dicio))
+        self.AbrirTelaPrincipal()
             
-        #verificações para o cadastro
 
     def Contato(self):
         pass
@@ -182,10 +182,8 @@ class Main(QMainWindow, Ui_Main):
             usuario = User()
             usuario.Register(nome,cpf,telefone,email)
             usuario.RegUser(user,senha)
+            self.conexao.sendMessage(str(dicio))
             self.AbrirTelaInicial()
-            
-            ########### socket comentado #############
-            #self.conexao.sendMessage(str(dicio))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

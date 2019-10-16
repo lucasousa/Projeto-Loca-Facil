@@ -14,7 +14,7 @@ class Ui_telainicial(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(995, 673)
-        MainWindow.setStyleSheet("background-color: #ADA8BE;")
+        MainWindow.setStyleSheet("background-color: rgb(255,255,255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)

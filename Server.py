@@ -14,9 +14,10 @@ class Servidor():
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) #reiniciliza o socket
         self.socket.bind(addr) #define a porta e quais ips podem se conectar com o servidor
         self.socket.listen(100) #define o limite de conexoes
-        threading.Thread(target = self.aceitar)
         threading.Thread(target = self.receptor)
         threading.Thread(target = self.Processador)
+        self.aceitar()
+
 
     def receptor(self):
         while True:
@@ -26,7 +27,7 @@ class Servidor():
 
     def Processador(self):
         while True:
-            if not Servidor.pode_receber:                #se existe uma mensagem
+            if not Servidor.pode_receber:               #se existe uma mensagem
                 dado = literal_eval(Servidor.mensagem)   #dicionário com o dado
                 Servidor.mensagem = None
                 Servidor.pode_receber = True             #pode receber novamente
@@ -35,7 +36,7 @@ class Servidor():
     def aceitar(self):       
         while True:
             self.socket.accept()
-            print("Nova conexão")
+            print("Nova Conexão")
 
 Servidor()
 
