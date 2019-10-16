@@ -1,27 +1,3 @@
-[08:47, 16/10/2019] Lucas Sousa UFPI: # -- coding: utf-8 --
-
-# Form implementation generated from reading ui file 'cadastro_usuário.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.1
-#
-# WARNING! All changes made in this file will be lost!
-
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-
-
-class Ui_cadastrousuario(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(973, 820)
-        MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        self.label_5.setGeometry(QtCore.QRect(175, 160, 59, 40))
-        font = QtGui.QFont()
-        font.setFamily…
-[08:55, 16/10/2019] Lucas Sousa UFPI: background-color: rgb(255, 255, 255);
 # Sistema para gerenciamento de vagas em imóveis
 
 Aqui estão contidas informações sobre o desenvolvimento do sistema LocaFácil, que visa a divulgação e gerenciamento de vagas de imóveis. (README em construção...)
