@@ -1,13 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QApplication, QTableWidgetItem
-from Telas.telainicial import Ui_telainicial
-from Telas.login import Ui_login
-from Telas.maintela import Ui_maintela
-from Telas.cadastroimovel import Ui_cadastroimovel
-from Telas.cadastrousuario import Ui_cadastrousuario
-from Telas.contato import Ui_contato
-from Telas.sobre import Ui_Sobre
-from Telas.recuperar_login import Ui_recuperar_login
+from codigos_telas.telainicial import Ui_telainicial
+from codigos_telas.login import Ui_login
+from codigos_telas.maintela import Ui_maintela
+from codigos_telas.cadastroimovel import Ui_cadastroimovel
+from codigos_telas.cadastrousuario import Ui_cadastrousuario
+from codigos_telas.contato import Ui_contato
+from codigos_telas.sobre import Ui_Sobre
+from codigos_telas.recuperar_login import Ui_recuperar_login
+from codigos_telas.cadastrofotos import Ui_cadastrofotos
 from PyQt5.QtGui import QPixmap
 import PyQt5
 import sys
@@ -35,6 +36,7 @@ class Ui_Main(QtWidgets.QWidget):
         self.stack5 = QtWidgets.QMainWindow()
         self.stack6 = QtWidgets.QMainWindow()
         self.stack7 = QtWidgets.QMainWindow()
+        self.stack8 = QtWidgets.QMainWindow()
 
         self.tela_inicio = Ui_telainicial()
         self.tela_inicio.setupUi(self.stack0)
@@ -60,6 +62,9 @@ class Ui_Main(QtWidgets.QWidget):
         self.tela_sobre = Ui_Sobre()
         self.tela_sobre.setupUi(self.stack7)
 
+        self.tela_cadastrofoto = Ui_cadastrofotos()
+        self.tela_cadastrofoto.setupUi(self.stack8)
+
         self.QtStack.addWidget(self.stack0) #Tela inicial
         self.QtStack.addWidget(self.stack1) #Tela login
         self.QtStack.addWidget(self.stack2) #Tela principal
@@ -68,6 +73,7 @@ class Ui_Main(QtWidgets.QWidget):
         self.QtStack.addWidget(self.stack5) #Tela de contato
         self.QtStack.addWidget(self.stack6) #Tela de recuperar login
         self.QtStack.addWidget(self.stack7) #Tela de sobre
+        self.QtStack.addWidget(self.stack8) #Tela de cadastro de fotos do imóvel
 
 
 class Main(QMainWindow, Ui_Main):
@@ -98,15 +104,18 @@ class Main(QMainWindow, Ui_Main):
 
         self.tela_contato.toolButton.clicked.connect(self.AbrirTelaPrincipal)         #Botão voltar (tela principal)
         self.tela_cadastro_imovel.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Botão voltar (tela principal)
+        self.tela_cadastro_imovel.pushButton_2.clicked.connect(self.AbrirTelaPrincipal) #Botão cancelar cadastro de imóvel
         
+        self.tela_login.toolButton_2.clicked.connect(self.AbrirTelaInicial) #Voltar de login para tela inicial
         self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin) #Link para recuperar Login
+        self.tela_recuperar_login.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Voltar da tela de recuperar login para a  tela  de login
 
         #cadastro Usuário
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario) #Cadastrar
         self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
         
         #Cadastro Imóvel
-        self.tela_cadastro_imovel.pushButton.clicked.connect(self.CadastrarImovel) #Cadastrar
+        self.tela_cadastro_imovel.pushButton.clicked.connect(self.AbrirTelaCadastroFotos) #Abrindo tela de  cadastrar fotos e continuando o cadastro do imóvel
 
         #Sobre
         self.tela_sobre.toolButton.clicked.connect(self.AbrirTelaPrincipal)
@@ -131,6 +140,8 @@ class Main(QMainWindow, Ui_Main):
         self.QtStack.setCurrentIndex(6)
     def AbrirTelaSobre(self):
         self.QtStack.setCurrentIndex(7)
+    def AbrirTelaCadastroFotos(self):
+        self.QtStack.setCurrentIndex(8)
 
 
     def CadastrarImovel(self):
@@ -143,6 +154,7 @@ class Main(QMainWindow, Ui_Main):
         dicio['cep'] = self.tela_cadastro_imovel.lineEdit_6.text()
         dicio['preço'] = self.tela_cadastro_imovel.lineEdit_5.text()
         dicio['cpf'] = self.tela_cadastro_imovel.lineEdit_12.text()
+        
         #Guardando as informações da tela em um dicionário
         if(len(dicio['cpf'])!=11):
             QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
