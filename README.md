@@ -1,4 +1,3 @@
-#OBS: projeto em manutenção
 # Sistema para gerenciamento de vagas em imóveis
 
 Aqui estão contidas informações sobre o desenvolvimento do sistema LocaFácil, que visa a divulgação e gerenciamento de vagas de imóveis. (README em construção...)
