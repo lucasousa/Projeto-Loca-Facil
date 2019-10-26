@@ -1,2 +1,4 @@
 *.pyc
 *.ipynb
+__pycache__/
+codigos_telas/__pycache__/
