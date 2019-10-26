@@ -159,7 +159,11 @@ class Main(QMainWindow, Ui_Main):
         if(len(dicio['cpf'])!=11):
             QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
         else:
-            self.conexao.sendMessage(str(dicio))
+            self.conexao.startConnection()
+            while(resp['status']!='success'):
+                self.conexao.sendMessage(str(dicio))
+                resp = self.conexao.receiveMessage()
+            self.conexao.closeConnection()
         self.AbrirTelaPrincipal()
             
 
@@ -183,18 +187,21 @@ class Main(QMainWindow, Ui_Main):
         else:
             senha = self.tela_cadastro_usuario.lineEdit_10.text()
             dicio = {}
-            dicio['nome'] = nome
+            dicio['name'] = nome
             dicio['cpf'] = cpf
-            dicio['telefone'] = telefone
+            dicio['telephone'] = telefone
             dicio['email'] = email
-            dicio['sexo'] = sexo
+            dicio['sex'] = sexo
             dicio['user'] = user
-            dicio['senha'] = senha
+            dicio['password'] = senha
             global Users
             usuario = User()
             usuario.Register(nome,cpf,telefone,email)
             usuario.RegUser(user,senha)
+            self.conexao.startConnection()
             self.conexao.sendMessage(str(dicio))
+            self.conexao.receiveMessage()
+            self.conexao.closeConnection()
             self.AbrirTelaInicial()
 
 if __name__ == '__main__':
