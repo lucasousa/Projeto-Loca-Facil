@@ -1,17 +1,21 @@
 import pymysql
-
+from hashlib import md5
 
 class DataBase(object):
     def __init__(self):
         self.host = 'localhost'
         self.usuario = 'root'
         self.db = 'locafacil'
-        self.password = 'lucas12'
+        self.password = 'samuel123'
+        self.port = 8001
         self.conexao = None
         self.cursor = None
 
+    def crypt(self, string):
+        return md5(string.encode()).hexdigest()
+
     def connect(self):
-        self.conexao = pymysql.connect(host=self.host, db=self.db, user=self.usuario, passwd=self.password)
+        self.conexao = pymysql.connect(host=self.host, db=self.db, user=self.usuario,port = self.port, passwd=self.password)
         self.cursor = self.conexao.cursor(pymysql.cursors.DictCursor) # Os resultados vem em dicionario
 
     def disconnect(self):
@@ -22,16 +26,20 @@ class DataBase(object):
 
         if(where):
             query = query + " WHERE " + where
-
+        print('query: ', query)
         self.cursor.execute(query)
         return self.cursor.fetchall() #pega todos os resultados da execução acima e retorna
         
     def insert_user(self, dic):
-        self.cursor.execute ('INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES (%s, %s, %s, %s, %s, %s, %s)',(  dic['nome'], dic['cpf'], dic['telefone'], dic['email'], dic['sexo'], dic['usuario'], dic['senha'] ))
+        if(self.select("cpf","user","cpf = {}".format(dic['cpf']))):
+            print("hhuehuehue")
+        else:
+            self.cursor.execute ('INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES (%s, %s, %s, %s, %s, %s, %s)',(  dic['nome'], dic['cpf'], dic['telefone'], dic['email'], dic['sexo'], dic['usuario'], dic['senha'] ))
+
         self.conexao.commit()
     
     def insert_rent(self, dic):
-        self.cursor.execute ('INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, qualidade, id_user ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', (dicio['desc'], dicio['bairro'], dicio['sit'], dicio['rua'], dicio['numero'], dicio['complemento'], dicio['cep'], dicio['preco'], dicio['quality'], dicio['id_user']))
+        self.cursor.execute ('INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (dicio['desc'], dicio['bairro'], dicio['sit'], dicio['rua'], dicio['numero'], dicio['complemento'], dicio['cep'], dicio['preco'], dicio['id_user']))
         self.conexao.commit()
 
     def update(self, dic, table, where=None): #dic vai ser um dicionário (field = value)
@@ -41,7 +49,6 @@ class DataBase(object):
         if(where):
             query = query + " WHERE " + where
 
-        print(query)
         self.cursor.execute(query)
         self.conexao.commit()
 
@@ -66,9 +73,8 @@ class DataBase(object):
         rua VARCHAR(45) NOT NULL,
         numero INT NOT NULL,
         complemento VARCHAR(45) NULL,
-        cep VARCHAR(7) NOT NULL,
+        cep VARCHAR(8) NOT NULL,
         preco FLOAT NOT NULL,
-        qualidade FLOAT NOT NULL,
         id_user INT NOT NULL,
         PRIMARY KEY (idrent, id_user),
         CONSTRAINT id_user
@@ -90,50 +96,49 @@ class DataBase(object):
         self.cursor.execute(sql)
 
 
+if __name__ == '__main__':
+
+    data = DataBase()
+    data.connect()
 
 
-data = DataBase()
-data.connect()
+    #--------- Deu certo ----------------
+    a = data.select("nome, cpf", "user", "iduser = 759347639")
+    print(a)
+    a = data.select("nome, cpf", "user")
+    print(a)
+    #-------------------------------------
+
+    dic = dict()
+
+    dic['nome'] = "Sousa"
+    dic['cpf'] = "12345678911"
+    dic['telefone'] = "89999329025"
+    dic['email'] = "lucas@gmail.com"
+    dic['sexo'] = "masculino"
+    dic['usuario'] = "lucas"
+    dic['senha'] = "lucasous"
+
+    #--------- Deu certo ----------------
+    data.insert_user(dic)
+    #-------------------------------------
 
 
-#--------- Deu certo ----------------
-a = data.select("nome, cpf", "user", "iduser = 1")
-print(a)
-a = data.select("nome, cpf", "user")
-print(a)
-#-------------------------------------
+    dicio= dict()
+    dicio['desc'] = "Pais Tropical"
+    dicio['bairro'] = "Junco"
+    dicio['sit'] = 1
+    dicio['rua'] = "Avenida Piauí"
+    dicio['numero'] = 338
+    dicio['complemento'] = "Em frente a Igreja São Francisco"
+    dicio['cep'] = "6460784"
+    dicio['preco'] = 500.00
+    dicio['id_user'] = 1
 
-dic = dict()
+    #--------- Deu certo ----------------
+    data.insert_rent(dicio)
+    #-------------------------------------
 
-dic['nome'] = "Sousa"
-dic['cpf'] = "12345678910"
-dic['telefone'] = "89999329025"
-dic['email'] = "lucas@gmail.com"
-dic['sexo'] = "masculino"
-dic['usuario'] = "lucas"
-dic['senha'] = "lucasous"
+    data.update({'senha': '@naosei123'}, "user", "iduser = 1")
 
-#--------- Deu certo ----------------
-# data.insert_user(dic)
-#-------------------------------------
-
-
-dicio= dict()
-dicio['desc'] = "Pais Tropical"
-dicio['bairro'] = "Junco"
-dicio['sit'] = 1
-dicio['rua'] = "Avenida Piauí"
-dicio['numero'] = 338
-dicio['complemento'] = "Em frente a Igreja São Francisco"
-dicio['cep'] = "6460784"
-dicio['preco'] = 500.00
-dicio['quality'] = 5
-dicio['id_user'] = 1
-
-#--------- Deu certo ----------------
-# data.insert_rent(dicio)
-#-------------------------------------
-
-data.update({'senha': '@naosei123'}, "user", "iduser = 1")
-
-data.disconnect()
+    data.disconnect()

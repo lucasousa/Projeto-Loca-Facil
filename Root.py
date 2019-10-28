@@ -146,6 +146,7 @@ class Main(QMainWindow, Ui_Main):
 
     def login(self):
         dic = {}
+        dic['op'] = 'Login'
         dic['login'] = self.tela_login.lineEdit_7.text()
         dic['senha'] = self.tela_login.lineEdit_8.text()
         self.conexao.startConnection()
@@ -161,32 +162,36 @@ class Main(QMainWindow, Ui_Main):
 
     def CadastrarImovel(self):
         dicio = {}
+        dicio['op'] = 'CadImovel'
         dicio['desc'] = self.tela_cadastro_imovel.lineEdit_10.text()
         dicio['bairro'] = self.tela_cadastro_imovel.lineEdit_5.text()
+        dicio['sit'] = 1
         dicio['rua'] = self.tela_cadastro_imovel.lineEdit_7.text()
         dicio['numero'] = self.tela_cadastro_imovel.lineEdit_9.text()
         dicio['complemento'] = self.tela_cadastro_imovel.lineEdit_8.text()
         dicio['cep'] = self.tela_cadastro_imovel.lineEdit_6.text()
-        dicio['preço'] = self.tela_cadastro_imovel.lineEdit_5.text()
-        dicio['cpf'] = self.tela_cadastro_imovel.lineEdit_12.text()
+        dicio['preco'] = self.tela_cadastro_imovel.lineEdit_5.text()
+        dicio['id_user'] = self.tela_cadastro_imovel.lineEdit_12.text()
         
+        verification = dicio['bairro'] == '' or dicio['rua'] == '' or dicio['numero'] == '' or len(dicio['cep']) != 8 or len(dicio['id_user']) != 11
         #Guardando as informações da tela em um dicionário
-        if(len(dicio['cpf'])!=11):
-            QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
+        if(verification):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha todos os campos de forma correta')
         else:
             self.conexao.startConnection()
             self.conexao.sendMessage(str(dicio))
             resp = literal_eval(self.conexao.receiveMessage())
-            if(resp['status']!='success'):
+            if(resp['status']=='success'):
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Cadastro realizado com sucesso')
             else:
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Ocorreu um erro de conexão, tente novamente mais tarde')
             self.conexao.closeConnection()
-        self.AbrirTelaPrincipal()
+            self.AbrirTelaPrincipal()
             
 
     def Contato(self):
         dic={}
+        dic['op'] = 'Contato' 
         dic['nome'] = self.tela_contato.lineEdit_7.text()
         dic['email'] = self.tela_contato.lineEdit_8.text()
         dic['message'] = self.tela_contato.lineEdit_9.text()
@@ -210,28 +215,39 @@ class Main(QMainWindow, Ui_Main):
         else:
             sexo = 'Feminino'
         user = self.tela_cadastro_usuario.lineEdit_11.text()
+        verification = nome == '' or cpf == '' or telefone == '' or email == '' or not '@' in email 
+        print(verification)
         if(self.tela_cadastro_usuario.lineEdit_10.text() != self.tela_cadastro_usuario.lineEdit_12.text()):
             QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas não coincidem')
         elif len(cpf) != 11 :
             QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
-        else:
-            senha = self.tela_cadastro_usuario.lineEdit_10.text()
-            dicio = {}
-            dicio['name'] = nome
-            dicio['cpf'] = cpf
-            dicio['telephone'] = telefone
-            dicio['email'] = email
-            dicio['sex'] = sexo
-            dicio['user'] = user
-            dicio['password'] = senha
-            usuario = User()
-            usuario.Register(nome,cpf,telefone,email)
-            usuario.RegUser(user,senha)
+        elif(not verification):
+            dic = {}
+            dic['op'] = 'VerifyCadUser'
+            dic['usuario'] = user
             self.conexao.startConnection()
-            self.conexao.sendMessage(str(dicio))
-            self.conexao.receiveMessage()
+            self.conexao.sendMessage(str(dic))
+            resp = literal_eval(self.conexao.receiveMessage())
             self.conexao.closeConnection()
-            self.AbrirTelaInicial()
+            if(resp['status'] == 'success'):
+                senha = self.tela_cadastro_usuario.lineEdit_10.text()
+                dicio = {}
+                dicio['op'] = 'CadUser'
+                dicio['nome'] = nome
+                dicio['cpf'] = cpf
+                dicio['telefone'] = telefone
+                dicio['email'] = email
+                dicio['sexo'] = sexo
+                dicio['usuario'] = user
+                dicio['senha'] = senha
+                self.conexao.startConnection()
+                self.conexao.sendMessage(str(dicio))
+                self.conexao.receiveMessage()
+                self.conexao.closeConnection()
+                self.AbrirTelaInicial()
+            else:
+                QtWidgets.QMessageBox.about(None, 'Erro', 'Esse usuário já existe')
+            
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
