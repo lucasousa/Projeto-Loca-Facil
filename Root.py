@@ -19,8 +19,6 @@ from Comunicacao import Conex
 import threading
 from ast import literal_eval
 
-Users = []
-
 class Ui_Main(QtWidgets.QWidget):
     def setupUi(self, Main):
         Main.setObjectName('Main')
@@ -92,7 +90,7 @@ class Main(QMainWindow, Ui_Main):
         self.tela_inicio.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Botão Login
 
         #login
-        self.tela_login.pushButton.clicked.connect(self.AbrirTelaPrincipal) #Botão Entrar
+        self.tela_login.pushButton.clicked.connect(self.login) #Botão Entrar
 
         #Main tela
         self.tela_principal.toolButton.clicked.connect(self.AbrirTelaCadImovel) #Cadastrar Imóvel
@@ -102,8 +100,8 @@ class Main(QMainWindow, Ui_Main):
         self.tela_principal.toolButton_2.clicked.connect(self.AbrirTelaInicial) #Encerrar Sessão
         self.tela_principal.toolButton_6.clicked.connect(self.Erro) #Buscar
 
-        self.tela_contato.toolButton.clicked.connect(self.AbrirTelaPrincipal)         #Botão voltar (tela principal)
-        self.tela_cadastro_imovel.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Botão voltar (tela principal)
+        self.tela_contato.toolButton.clicked.connect(self.AbrirTelaPrincipal)           #Botão voltar (tela principal)
+        self.tela_cadastro_imovel.toolButton.clicked.connect(self.AbrirTelaPrincipal)   #Botão voltar (tela principal)
         self.tela_cadastro_imovel.pushButton_2.clicked.connect(self.AbrirTelaPrincipal) #Botão cancelar cadastro de imóvel
         
         self.tela_login.toolButton_2.clicked.connect(self.AbrirTelaInicial) #Voltar de login para tela inicial
@@ -111,7 +109,7 @@ class Main(QMainWindow, Ui_Main):
         self.tela_recuperar_login.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Voltar da tela de recuperar login para a  tela  de login
 
         #cadastro Usuário
-        self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario) #Cadastrar
+        self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario)   #Cadastrar
         self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
         
         #Cadastro Imóvel
@@ -119,6 +117,9 @@ class Main(QMainWindow, Ui_Main):
 
         #Sobre
         self.tela_sobre.toolButton.clicked.connect(self.AbrirTelaPrincipal)
+
+        #contato
+        self.tela_contato.pushButton.clicked.connect(self.Contato)
     
     def Erro(self):
         QtWidgets.QMessageBox.about(None, "Erro","Função em desenvolvimento")
@@ -143,6 +144,20 @@ class Main(QMainWindow, Ui_Main):
     def AbrirTelaCadastroFotos(self):
         self.QtStack.setCurrentIndex(8)
 
+    def login(self):
+        dic = {}
+        dic['login'] = self.tela_login.lineEdit_7.text()
+        dic['senha'] = self.tela_login.lineEdit_8.text()
+        self.conexao.startConnection()
+        self.conexao.sendMessage(str(dic))
+        resp = self.conexao.receiveMessage()
+        resp = literal_eval(resp)
+        self.conexao.closeConnection()
+        if(resp['status'] == 'success'): #busca no banco
+            self.AbrirTelaPrincipal()
+        else:
+            QtWidgets.QMessageBox.about(None, 'Erro', 'usuário e/ou senha inválido(s)')
+
 
     def CadastrarImovel(self):
         dicio = {}
@@ -160,15 +175,30 @@ class Main(QMainWindow, Ui_Main):
             QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
         else:
             self.conexao.startConnection()
-            while(resp['status']!='success'):
-                self.conexao.sendMessage(str(dicio))
-                resp = self.conexao.receiveMessage()
+            self.conexao.sendMessage(str(dicio))
+            resp = literal_eval(self.conexao.receiveMessage())
+            if(resp['status']!='success'):
+                QtWidgets.QMessageBox.about(None, 'Importante', 'Cadastro realizado com sucesso')
+            else:
+                QtWidgets.QMessageBox.about(None, 'Importante', 'Ocorreu um erro de conexão, tente novamente mais tarde')
             self.conexao.closeConnection()
         self.AbrirTelaPrincipal()
             
 
     def Contato(self):
-        pass
+        dic={}
+        dic['nome'] = self.tela_contato.lineEdit_7.text()
+        dic['email'] = self.tela_contato.lineEdit_8.text()
+        dic['message'] = self.tela_contato.lineEdit_9.text()
+        self.conexao.startConnection()
+        self.conexao.sendMessage(str(dic))
+        resp = literal_eval(self.conexao.receiveMessage())
+        if(resp['status'] == 'success'):
+            QtWidgets.QMessageBox.about(None, 'Importante', 'Sua Mensagem foi enviada com sucesso')
+        else:
+            QtWidgets.QMessageBox.about(None, 'Importante', 'Não conseguimos contato, por favor tente mais tarde')
+        self.conexao.closeConnection()
+        self.AbrirTelaPrincipal()
 
     def CadastrarUsuario(self):
         nome = self.tela_cadastro_usuario.lineEdit_5.text()
@@ -194,7 +224,6 @@ class Main(QMainWindow, Ui_Main):
             dicio['sex'] = sexo
             dicio['user'] = user
             dicio['password'] = senha
-            global Users
             usuario = User()
             usuario.Register(nome,cpf,telefone,email)
             usuario.RegUser(user,senha)
