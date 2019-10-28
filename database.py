@@ -45,6 +45,49 @@ class DataBase(object):
         self.cursor.execute(query)
         self.conexao.commit()
 
+    def create_tables(self):
+        sql = """ CREATE TABLE IF NOT EXISTS user(
+        iduser integer AUTO_INCREMENT,
+        nome text NOT NULL,
+        cpf VARCHAR(11) NOT NULL,
+        telefone VARCHAR(11) NOT NULL,
+        email VARCHAR(45) NOT NULL,
+        sexo VARCHAR(9) NOT NULL,
+        usuario VARCHAR(20) NOT NULL,
+        senha VARCHAR(32) NOT NULL,
+        PRIMARY KEY (iduser, cpf) )"""
+        self.cursor.execute(sql)
+
+        sql = """ CREATE TABLE IF NOT EXISTS rent(
+        idrent integer AUTO_INCREMENT,
+        descricao VARCHAR(200) NULL,
+        bairro VARCHAR(45) NOT NULL,
+        situacao TINYINT NOT NULL,
+        rua VARCHAR(45) NOT NULL,
+        numero INT NOT NULL,
+        complemento VARCHAR(45) NULL,
+        cep VARCHAR(7) NOT NULL,
+        preco FLOAT NOT NULL,
+        qualidade FLOAT NOT NULL,
+        id_user INT NOT NULL,
+        PRIMARY KEY (idrent, id_user),
+        CONSTRAINT id_user
+            FOREIGN KEY (id_user)
+            REFERENCES user(iduser)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION) """
+        self.cursor.execute(sql)
+
+        sql = """CREATE TABLE IF NOT EXISTS images(
+        origem VARCHAR(200) NOT NULL,
+        id_rent INT NOT NULL,
+        PRIMARY KEY (id_rent),
+        CONSTRAINT id_rent
+            FOREIGN KEY (id_rent)
+            REFERENCES rent (idrent)
+            ON DELETE CASCADE
+            ON UPDATE NO ACTION)"""
+        self.cursor.execute(sql)
 
 
 
