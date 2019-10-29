@@ -32,14 +32,16 @@ class DataBase(object):
         
     def insert_user(self, dic):
         if(self.select("cpf","user","cpf = {}".format(dic['cpf']))):
-            print("hhuehuehue")
+            pass
         else:
-            self.cursor.execute ('INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES (%s, %s, %s, %s, %s, %s, %s)',(  dic['nome'], dic['cpf'], dic['telefone'], dic['email'], dic['sexo'], dic['usuario'], dic['senha'] ))
+            self.cursor.execute ('INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES (%s, %s, %s, %s, %s, %s, %s)',(  dic['nome'], dic['cpf'], dic['telefone'], dic['email'], dic['sexo'], dic['usuario'], self.crypt(dic['senha']) ))
 
         self.conexao.commit()
     
     def insert_rent(self, dic):
-        self.cursor.execute ('INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (dicio['desc'], dicio['bairro'], dicio['sit'], dicio['rua'], dicio['numero'], dicio['complemento'], dicio['cep'], dicio['preco'], dicio['id_user']))
+        dic['id_user'] = self.select('iduser','user', "cpf = '{}'".format(dic['id_user']))[0]['iduser']
+        print(dic)
+        self.cursor.execute ('INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (dic['desc'], dic['bairro'], dic['sit'], dic['rua'], int(dic['numero']), dic['complemento'], dic['cep'], float(dic['preco']), int(dic['id_user'])))
         self.conexao.commit()
 
     def update(self, dic, table, where=None): #dic vai ser um dicionário (field = value)
@@ -51,6 +53,7 @@ class DataBase(object):
 
         self.cursor.execute(query)
         self.conexao.commit()
+    
 
     def create_tables(self):
         sql = """ CREATE TABLE IF NOT EXISTS user(

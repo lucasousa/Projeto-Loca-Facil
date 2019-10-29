@@ -18,6 +18,7 @@ from classes import Person, Rent, Renter, User
 from Comunicacao import Conex
 import threading
 from ast import literal_eval
+import time
 
 class Ui_Main(QtWidgets.QWidget):
     def setupUi(self, Main):
@@ -94,18 +95,18 @@ class Main(QMainWindow, Ui_Main):
 
         #Main tela
         self.tela_principal.toolButton.clicked.connect(self.AbrirTelaCadImovel) #Cadastrar Imóvel
-        self.tela_principal.toolButton_3.clicked.connect(self.Erro) #Visualizar Imóveis
+        self.tela_principal.toolButton_3.clicked.connect(self.Erro)             #Visualizar Imóveis
         self.tela_principal.toolButton_4.clicked.connect(self.AbrirTelaContato) #Contato
-        self.tela_principal.toolButton_5.clicked.connect(self.AbrirTelaSobre) #Sobre
+        self.tela_principal.toolButton_5.clicked.connect(self.AbrirTelaSobre)   #Sobre
         self.tela_principal.toolButton_2.clicked.connect(self.AbrirTelaInicial) #Encerrar Sessão
-        self.tela_principal.toolButton_6.clicked.connect(self.Erro) #Buscar
+        self.tela_principal.toolButton_6.clicked.connect(self.Erro)             #Buscar
 
         self.tela_contato.toolButton.clicked.connect(self.AbrirTelaPrincipal)           #Botão voltar (tela principal)
         self.tela_cadastro_imovel.toolButton.clicked.connect(self.AbrirTelaPrincipal)   #Botão voltar (tela principal)
         self.tela_cadastro_imovel.pushButton_2.clicked.connect(self.AbrirTelaPrincipal) #Botão cancelar cadastro de imóvel
         
-        self.tela_login.toolButton_2.clicked.connect(self.AbrirTelaInicial) #Voltar de login para tela inicial
-        self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin) #Link para recuperar Login
+        self.tela_login.toolButton_2.clicked.connect(self.AbrirTelaInicial)         #Voltar de login para tela inicial
+        self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin)    #Link para recuperar Login
         self.tela_recuperar_login.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Voltar da tela de recuperar login para a  tela  de login
 
         #cadastro Usuário
@@ -113,7 +114,7 @@ class Main(QMainWindow, Ui_Main):
         self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
         
         #Cadastro Imóvel
-        self.tela_cadastro_imovel.pushButton.clicked.connect(self.AbrirTelaCadastroFotos) #Abrindo tela de  cadastrar fotos e continuando o cadastro do imóvel
+        self.tela_cadastro_imovel.pushButton.clicked.connect(self.CadastrarImovel) #Abrindo tela de  cadastrar fotos e continuando o cadastro do imóvel
 
         #Sobre
         self.tela_sobre.toolButton.clicked.connect(self.AbrirTelaPrincipal)
@@ -151,7 +152,9 @@ class Main(QMainWindow, Ui_Main):
         dic['senha'] = self.tela_login.lineEdit_8.text()
         self.conexao.startConnection()
         self.conexao.sendMessage(str(dic))
+        print("123")
         resp = self.conexao.receiveMessage()
+        print("123")
         resp = literal_eval(resp)
         self.conexao.closeConnection()
         if(resp['status'] == 'success'): #busca no banco
@@ -174,19 +177,19 @@ class Main(QMainWindow, Ui_Main):
         dicio['id_user'] = self.tela_cadastro_imovel.lineEdit_12.text()
         
         verification = dicio['bairro'] == '' or dicio['rua'] == '' or dicio['numero'] == '' or len(dicio['cep']) != 8 or len(dicio['id_user']) != 11
-        #Guardando as informações da tela em um dicionário
         if(verification):
             QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha todos os campos de forma correta')
         else:
             self.conexao.startConnection()
             self.conexao.sendMessage(str(dicio))
+
             resp = literal_eval(self.conexao.receiveMessage())
             if(resp['status']=='success'):
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Cadastro realizado com sucesso')
             else:
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Ocorreu um erro de conexão, tente novamente mais tarde')
             self.conexao.closeConnection()
-            self.AbrirTelaPrincipal()
+            self.AbrirTelaCadastroFotos
             
 
     def Contato(self):

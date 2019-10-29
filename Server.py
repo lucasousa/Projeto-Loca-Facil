@@ -10,6 +10,7 @@ class ClientThread(threading.Thread):
         self.csocket = clientsocket
         print ("Nova conexao: ", clientAddress)
         self.db = DataBase()
+        
 
     def run(self):
         ack = None
@@ -32,38 +33,54 @@ class ClientThread(threading.Thread):
     
     def defineOP(self, dic):
         if(dic['op'] == 'VerifyCadUser'):
+            self.db.connect()
             busca = self.db.select("usuario", "user", "usuario='{}'".format(dic['usuario']))
+            self.db.disconnect()
             print(busca)
             if(len(busca)==0):
                 return True
             else:
-                return True
+                return False
         elif(dic['op'] == 'CadUser'):
             try:
+                self.db.connect()
                 self.db.insert_user(dic)
+                self.db.disconnect()
                 return True
             except:
                 return False
         elif (dic['op'] == 'CadImovel'):
             try:
+                self.db.connect()
                 self.db.insert_rent(dic)
+                self.db.disconnect()
                 return True
             except:
                 return False
         elif (dic['op'] == 'Login'):
-            return self.verificaLogin(dic)
+            self.db.connect()
+            verificador = self.db.select("senha", "user", "usuario='{}'".format(dic['login']))
+            print(verificador[0]['senha'])
+            print(self.db.crypt(dic['senha']))
+            if(verificador[0]['senha'] == self.db.crypt(dic['senha'])):
+                return True
+            else:
+                return False
+            self.db.disconnect()
         
         else:
             pass #Contato
     
     def verificaLogin(self, dic):
-        if(dic['op'] == "Login"):
-            verificador = self.db.select("senha", "user", "usuario='{}'".format(dic['usuario']))
-            if(verificador['senha'] == self.db.crypt(dic['senha'])):
-                return True
-            else:
-                return False
-
+        self.db.connect()
+        verificador = self.db.select("senha", "user", "usuario='{}'".format(dic['usuario']))
+        print(verificador)
+        print(self.db.crypt(dic['senha']))
+        if(verificador[0]['senha'] == self.db.crypt(dic['senha'])):
+            return True
+        else:
+            return False
+        self.db.disconnect()
 
 if __name__ == '__main__':
     print()
