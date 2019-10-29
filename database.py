@@ -54,6 +54,14 @@ class DataBase(object):
         self.cursor.execute(query)
         self.conexao.commit()
     
+    def delete(self, table, where=None):
+            query = "DELETE FROM " + table
+
+        if(where):
+            quere = query + " WHERE " + where
+
+        self.cursor.execute(query)
+        self.conexao.commit()
 
     def create_tables(self):
         sql = """ CREATE TABLE IF NOT EXISTS user(
