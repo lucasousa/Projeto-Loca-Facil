@@ -9,6 +9,7 @@ from codigos_telas.contato import Ui_contato
 from codigos_telas.sobre import Ui_Sobre
 from codigos_telas.recuperar_login import Ui_recuperar_login
 from codigos_telas.cadastrofotos import Ui_cadastrofotos
+from codigos_telas.pesquisar import Ui_Pesquisar
 from PyQt5.QtGui import QPixmap
 import PyQt5
 import sys
@@ -36,6 +37,7 @@ class Ui_Main(QtWidgets.QWidget):
         self.stack6 = QtWidgets.QMainWindow()
         self.stack7 = QtWidgets.QMainWindow()
         self.stack8 = QtWidgets.QMainWindow()
+        self.stack9 = QtWidgets.QMainWindow()
 
         self.tela_inicio = Ui_telainicial()
         self.tela_inicio.setupUi(self.stack0)
@@ -64,6 +66,9 @@ class Ui_Main(QtWidgets.QWidget):
         self.tela_cadastrofoto = Ui_cadastrofotos()
         self.tela_cadastrofoto.setupUi(self.stack8)
 
+        self.tela_pesquisar = Ui_Pesquisar()
+        self.tela_pesquisar.setupUi(self.stack9)
+
         self.QtStack.addWidget(self.stack0) #Tela inicial
         self.QtStack.addWidget(self.stack1) #Tela login
         self.QtStack.addWidget(self.stack2) #Tela principal
@@ -73,6 +78,7 @@ class Ui_Main(QtWidgets.QWidget):
         self.QtStack.addWidget(self.stack6) #Tela de recuperar login
         self.QtStack.addWidget(self.stack7) #Tela de sobre
         self.QtStack.addWidget(self.stack8) #Tela de cadastro de fotos do imóvel
+        self.QtStack.addWidget(self.stack9) #Tela de pesquisar
 
 
 class Main(QMainWindow, Ui_Main):
@@ -99,7 +105,7 @@ class Main(QMainWindow, Ui_Main):
         self.tela_principal.toolButton_4.clicked.connect(self.AbrirTelaContato) #Contato
         self.tela_principal.toolButton_5.clicked.connect(self.AbrirTelaSobre)   #Sobre
         self.tela_principal.toolButton_2.clicked.connect(self.AbrirTelaInicial) #Encerrar Sessão
-        self.tela_principal.toolButton_6.clicked.connect(self.Erro)             #Buscar
+        self.tela_principal.toolButton_6.clicked.connect(self.AbrirTelaPesquisar)             #Buscar
 
         self.tela_contato.toolButton.clicked.connect(self.AbrirTelaPrincipal)           #Botão voltar (tela principal)
         self.tela_cadastro_imovel.toolButton.clicked.connect(self.AbrirTelaPrincipal)   #Botão voltar (tela principal)
@@ -108,6 +114,7 @@ class Main(QMainWindow, Ui_Main):
         self.tela_login.toolButton_2.clicked.connect(self.AbrirTelaInicial)         #Voltar de login para tela inicial
         self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin)    #Link para recuperar Login
         self.tela_recuperar_login.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Voltar da tela de recuperar login para a  tela  de login
+        
 
         #cadastro Usuário
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario)   #Cadastrar
@@ -121,7 +128,8 @@ class Main(QMainWindow, Ui_Main):
 
         #contato
         self.tela_contato.pushButton.clicked.connect(self.Contato)
-    
+
+
     def Erro(self):
         QtWidgets.QMessageBox.about(None, "Erro","Função em desenvolvimento")
 
@@ -144,6 +152,8 @@ class Main(QMainWindow, Ui_Main):
         self.QtStack.setCurrentIndex(7)
     def AbrirTelaCadastroFotos(self):
         self.QtStack.setCurrentIndex(8)
+    def AbrirTelaPesquisar(self):
+        self.QtStack.setCurrentIndex(9)
 
     def login(self):
         dic = {}
