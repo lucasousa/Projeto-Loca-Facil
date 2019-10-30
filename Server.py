@@ -4,6 +4,7 @@ from ast import literal_eval
 from hashlib import md5
 from database import DataBase
 
+
 class ClientThread(threading.Thread):
     def __init__(self,clientAddress,clientsocket):
         threading.Thread.__init__(self)
@@ -44,8 +45,7 @@ class ClientThread(threading.Thread):
         elif(dic['op'] == 'CadUser'):
             try:
                 self.db.connect()
-                self.db.insert_user(dic)
-                self.db.disconnect()
+                """ self.db.insert_user(dic) """
                 return True
             except:
                 return False

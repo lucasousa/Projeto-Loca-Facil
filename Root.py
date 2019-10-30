@@ -183,7 +183,7 @@ class Main(QMainWindow, Ui_Main):
         dicio['numero'] = self.tela_cadastro_imovel.lineEdit_9.text()
         dicio['complemento'] = self.tela_cadastro_imovel.lineEdit_8.text()
         dicio['cep'] = self.tela_cadastro_imovel.lineEdit_6.text()
-        dicio['preco'] = self.tela_cadastro_imovel.lineEdit_5.text()
+        dicio['preco'] = self.tela_cadastro_imovel.lineEdit_11.text()
         dicio['id_user'] = self.tela_cadastro_imovel.lineEdit_12.text()
         
         verification = dicio['bairro'] == '' or dicio['rua'] == '' or dicio['numero'] == '' or len(dicio['cep']) != 8 or len(dicio['id_user']) != 11
@@ -196,10 +196,10 @@ class Main(QMainWindow, Ui_Main):
             resp = literal_eval(self.conexao.receiveMessage())
             if(resp['status']=='success'):
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Cadastro realizado com sucesso')
+                self.AbrirTelaCadastroFotos()
             else:
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Ocorreu um erro de conexão, tente novamente mais tarde')
             self.conexao.closeConnection()
-            self.AbrirTelaCadastroFotos
             
 
     def Contato(self):
@@ -243,6 +243,7 @@ class Main(QMainWindow, Ui_Main):
             resp = literal_eval(self.conexao.receiveMessage())
             self.conexao.closeConnection()
             if(resp['status'] == 'success'):
+
                 senha = self.tela_cadastro_usuario.lineEdit_10.text()
                 dicio = {}
                 dicio['op'] = 'CadUser'
