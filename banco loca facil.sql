@@ -22,17 +22,17 @@ USE `locafacil` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user` (
   `iduser` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
   `cpf` VARCHAR(11) NOT NULL,
-  `telephone` VARCHAR(11) NOT NULL,
+  `telefone` VARCHAR(11) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `sex` VARCHAR(9) NOT NULL,
-  `user` VARCHAR(20) NOT NULL,
-  `password` VARCHAR(32) NOT NULL,
+  `sexo` VARCHAR(9) NOT NULL,
+  `usuario` VARCHAR(20) NOT NULL,
+  `senha` VARCHAR(32) NOT NULL,
   PRIMARY KEY (`iduser`, `cpf`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  UNIQUE INDEX `user_UNIQUE` (`user` ASC))
+  UNIQUE INDEX `iduser_UNIQUE` (`iduser` ASC))
 ENGINE = InnoDB;
 
 
@@ -41,14 +41,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `rent` (
   `idrent` INT NOT NULL,
-  `description` VARCHAR(200) NULL,
-  `neighborhood` VARCHAR(45) NOT NULL,
-  `situation` TINYINT NOT NULL,
-  `street` VARCHAR(45) NOT NULL,
-  `number` INT NOT NULL,
-  `complement` VARCHAR(45) NULL,
+  `descricao` VARCHAR(200) NULL,
+  `bairro` VARCHAR(45) NOT NULL,
+  `situacao` TINYINT NOT NULL,
+  `rua` VARCHAR(45) NOT NULL,
+  `numero` INT NOT NULL,
+  `complemento` VARCHAR(45) NULL,
   `cep` VARCHAR(8) NOT NULL,
-  `price` FLOAT NOT NULL,
+  `preco` FLOAT NOT NULL,
   `id_user` INT NOT NULL,
   PRIMARY KEY (`idrent`, `id_user`),
   INDEX `id_user_idx` (`id_user` ASC),
