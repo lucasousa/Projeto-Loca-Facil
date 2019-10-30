@@ -41,7 +41,7 @@ class DataBase(object):
     def insert_rent(self, dic):
         dic['id_user'] = self.select('iduser','user', "cpf = '{}'".format(dic['id_user']))[0]['iduser']
         print(dic)
-        self.cursor.execute ('INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)', (dic['desc'], dic['bairro'], dic['sit'], dic['rua'], int(dic['numero']), dic['complemento'], dic['cep'], float(dic['preco']), int(dic['id_user'])))
+        self.cursor.execute ('INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES (%s,%s,%d,%s,%d,%s,%s,%f,%d)', (dic['desc'], dic['bairro'], int(dic['sit']), dic['rua'], int(dic['numero']), dic['complemento'], dic['cep'], float(dic['preco']), int(dic['id_user'])))
         self.conexao.commit()
 
     def update(self, dic, table, where=None): #dic vai ser um dicionário (field = value)
@@ -57,7 +57,7 @@ class DataBase(object):
     def delete(self, table, where=None):
         query = "DELETE FROM " + table
         if(where):
-            quere = query + " WHERE " + where
+            query = query + " WHERE " + where
 
         self.cursor.execute(query)
         self.conexao.commit()
