@@ -3,6 +3,7 @@ import socket
 from ast import literal_eval
 from hashlib import md5
 from database import DataBase
+from contato import EnviaEmail
 
 
 class ClientThread(threading.Thread):
@@ -19,7 +20,7 @@ class ClientThread(threading.Thread):
             packet = self.csocket.recv(6144).decode() 
             try:
                 packet = literal_eval(packet)
-                print(packet)
+                # print(packet)
                 if(self.defineOP(packet)):
                     ack = 1
                 break
@@ -59,17 +60,49 @@ class ClientThread(threading.Thread):
                 return False
         elif (dic['op'] == 'Login'):
             self.db.connect()
-            verificador = self.db.select("senha", "user", "usuario='{}'".format(dic['login']))
-            print(verificador[0]['senha'])
-            print(self.db.crypt(dic['senha']))
+            
+            if(len(dic['login']) <=1 or len(dic['senha']) <=1 ):
+                return False
+            else:
+                verificador = self.db.select("senha", "user", "usuario='{}'".format(dic['login']))
+            
+            # print(verificador[0]['senha'])
+            # print(self.db.crypt(dic['senha']))
+
+            if(verificador == ()):
+                return False
+
             if(verificador[0]['senha'] == self.db.crypt(dic['senha'])):
                 return True
             else:
                 return False
+
             self.db.disconnect()
         
-        else:
-            pass #Contato
+        elif(dic['op'] == 'AlterarSenha'):
+            self.db.connect()
+            if(len(dic['cpf']) <=1 or len(dic['usuario']) <=1 ):
+                return False
+            else:
+                print("Entrouaququuq")
+                verificador = self.db.select("cpf, usuario", "user", "cpf='{}', usuario='{}'".format(dic['cpf'],dic['usuario']))
+                print("Verificador: ", verificador)
+            if(verificador == ()):
+                return False
+
+            if(verificador[0]['cpf'] == dic['cpf'] and verificador[0]['usuario'] == dic['usuario']):
+                self.db.update({'senha':dic['senha']}, "user", "cpf='{}".format(dic['cpf']))
+                return True
+            else:
+                return False
+            self.db.disconnect()   
+
+        elif (dic['op'] == 'Contato'):
+            msg = EnviaEmail(dic['email'])
+            msg.enviar(dic['nome'], dic['message'])
+            return True
+
+
     
     def verificaLogin(self, dic):
         self.db.connect()
@@ -81,6 +114,8 @@ class ClientThread(threading.Thread):
         else:
             return False
         self.db.disconnect()
+
+
 
 if __name__ == '__main__':
     print()

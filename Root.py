@@ -21,6 +21,7 @@ import threading
 from ast import literal_eval
 import time
 
+
 class Ui_Main(QtWidgets.QWidget):
     def setupUi(self, Main):
         Main.setObjectName('Main')
@@ -128,6 +129,9 @@ class Main(QMainWindow, Ui_Main):
 
         #contato
         self.tela_contato.pushButton.clicked.connect(self.Contato)
+        
+        #MudarSenha
+        self.tela_recuperar_login.pushButton.clicked.connect(self.alteraSenha)
 
 
     def Erro(self):
@@ -162,9 +166,7 @@ class Main(QMainWindow, Ui_Main):
         dic['senha'] = self.tela_login.lineEdit_8.text()
         self.conexao.startConnection()
         self.conexao.sendMessage(str(dic))
-        print("123")
         resp = self.conexao.receiveMessage()
-        print("123")
         resp = literal_eval(resp)
         self.conexao.closeConnection()
         if(resp['status'] == 'success'): #busca no banco
@@ -172,6 +174,30 @@ class Main(QMainWindow, Ui_Main):
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'usuário e/ou senha inválido(s)')
 
+    def alteraSenha(self):
+        dic = {}
+        dic['op'] = 'AlterarSenha'
+        dic['usuario'] = self.tela_recuperar_login.lineEdit_7.text()
+        dic['cpf'] = self.tela_recuperar_login.lineEdit_8.text()
+        dic['senha'] = self.tela_recuperar_login.lineEdit_9.text()
+        dic['repetir'] = self.tela_recuperar_login.lineEdit_10.text()
+        
+        if(dic['senha'] != dic['repetir']):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas devem ser iguais!')
+            return 0
+
+        self.conexao.startConnection()
+        self.conexao.sendMessage(str(dic))
+        resp = self.conexao.receiveMessage()
+        resp = literal_eval(resp)
+        self.conexao.closeConnection()
+        
+        if(resp['status'] == 'success'): #busca no banco
+            QtWidgets.QMessageBox.about(None, 'Ok!', 'Senha alterada com sucesso!')
+            self.AbrirTelaPrincipal()
+        
+        else:
+            QtWidgets.QMessageBox.about(None, 'Erro', 'usuário e/ou cpf inválido(s)')
 
     def CadastrarImovel(self):
         dicio = {}
@@ -203,19 +229,26 @@ class Main(QMainWindow, Ui_Main):
             
 
     def Contato(self):
+        
         dic={}
         dic['op'] = 'Contato' 
         dic['nome'] = self.tela_contato.lineEdit_7.text()
         dic['email'] = self.tela_contato.lineEdit_8.text()
         dic['message'] = self.tela_contato.lineEdit_9.text()
+
+        if(len(dic['nome']) <=1 or len(dic['email']) <= 1 or len(dic['message'])<= 1):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha todos os campos')
+            return False
+
         self.conexao.startConnection()
         self.conexao.sendMessage(str(dic))
         resp = literal_eval(self.conexao.receiveMessage())
+        self.conexao.closeConnection()
+
         if(resp['status'] == 'success'):
             QtWidgets.QMessageBox.about(None, 'Importante', 'Sua Mensagem foi enviada com sucesso')
         else:
             QtWidgets.QMessageBox.about(None, 'Importante', 'Não conseguimos contato, por favor tente mais tarde')
-        self.conexao.closeConnection()
         self.AbrirTelaPrincipal()
 
     def CadastrarUsuario(self):
@@ -232,7 +265,7 @@ class Main(QMainWindow, Ui_Main):
         print(verification)
         if(self.tela_cadastro_usuario.lineEdit_10.text() != self.tela_cadastro_usuario.lineEdit_12.text()):
             QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas não coincidem')
-        elif len(cpf) != 11 :
+        elif len(cpf) != 11:
             QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
         elif(not verification):
             dic = {}
