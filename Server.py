@@ -20,7 +20,7 @@ class ClientThread(threading.Thread):
             packet = self.csocket.recv(6144).decode() 
             try:
                 packet = literal_eval(packet)
-                # print(packet)
+                print(packet)
                 if(self.defineOP(packet)):
                     ack = 1
                 break
@@ -44,12 +44,10 @@ class ClientThread(threading.Thread):
             else:
                 return False
         elif(dic['op'] == 'CadUser'):
-            try:
-                self.db.connect()
-                """ self.db.insert_user(dic) """
-                return True
-            except:
-                return False
+            self.db.connect()
+            self.db.insert_user(dic)
+            self.db.disconnect()
+            return True
         elif (dic['op'] == 'CadImovel'):
             try:
                 self.db.connect()
@@ -65,9 +63,6 @@ class ClientThread(threading.Thread):
                 return False
             else:
                 verificador = self.db.select("senha", "user", "usuario='{}'".format(dic['login']))
-            
-            # print(verificador[0]['senha'])
-            # print(self.db.crypt(dic['senha']))
 
             if(verificador == ()):
                 return False
@@ -76,7 +71,6 @@ class ClientThread(threading.Thread):
                 return True
             else:
                 return False
-
             self.db.disconnect()
         
         elif(dic['op'] == 'verifica_user_cpf'):

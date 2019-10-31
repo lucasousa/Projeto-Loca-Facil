@@ -43,14 +43,14 @@ CREATE TABLE IF NOT EXISTS `rent` (
   `idrent` INT NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(200) NULL,
   `bairro` VARCHAR(45) NOT NULL,
-  `situacao` TINYINT NOT NULL,
+  `situacao` INT NOT NULL,
   `rua` VARCHAR(45) NOT NULL,
   `numero` INT NOT NULL,
   `complemento` VARCHAR(45) NULL,
   `cep` VARCHAR(8) NOT NULL,
   `preco` FLOAT NOT NULL,
   `id_user` INT NOT NULL,
-  PRIMARY KEY (`idrent`, `id_user`),
+  PRIMARY KEY (`idrent`),
   INDEX `id_user_idx` (`id_user` ASC),
   CONSTRAINT `id_user`
     FOREIGN KEY (`id_user`)
@@ -66,7 +66,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `images` (
   `origem` VARCHAR(200) NOT NULL,
   `id_rent` INT NOT NULL,
-  PRIMARY KEY (`id_rent`),
   CONSTRAINT `id_rent`
     FOREIGN KEY (`id_rent`)
     REFERENCES `locafacil`.`rent` (`idrent`)

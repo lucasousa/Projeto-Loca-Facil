@@ -125,9 +125,6 @@ class Main(QMainWindow, Ui_Main):
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario)   #Cadastrar
         self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
         
-        # self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario)   #Cadastrar
-        # self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
-        
         #Cadastro Imóvel
         self.tela_cadastro_imovel.pushButton.clicked.connect(self.CadastrarImovel) #Abrindo tela de  cadastrar fotos e continuando o cadastro do imóvel
 
@@ -287,10 +284,12 @@ class Main(QMainWindow, Ui_Main):
             dic = {}
             dic['op'] = 'VerifyCadUser'
             dic['usuario'] = user
+            
             self.conexao.startConnection()
             self.conexao.sendMessage(str(dic))
             resp = literal_eval(self.conexao.receiveMessage())
             self.conexao.closeConnection()
+
             if(resp['status'] == 'success'):
 
                 senha = self.tela_cadastro_usuario.lineEdit_10.text()
@@ -307,6 +306,7 @@ class Main(QMainWindow, Ui_Main):
                 self.conexao.sendMessage(str(dicio))
                 self.conexao.receiveMessage()
                 self.conexao.closeConnection()
+                QtWidgets.QMessageBox.about(None, 'Ok', 'Usuário cadastrado com sucesso')
                 self.AbrirTelaInicial()
             else:
                 QtWidgets.QMessageBox.about(None, 'Erro', 'Esse usuário já existe')

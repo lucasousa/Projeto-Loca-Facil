@@ -7,7 +7,6 @@ class DataBase(object):
         self.usuario = 'root'
         self.db = 'locafacil'
         self.password = 'lucas12'
-        # self.port = 8001
         self.conexao = None
         self.cursor = None
 
@@ -15,7 +14,7 @@ class DataBase(object):
         return md5(string.encode()).hexdigest()
 
     def connect(self):
-        self.conexao = pymysql.connect(host=self.host, db=self.db,user=self.usuario,passwd=self.password)
+        self.conexao = pymysql.connect(host=self.host, db=self.db, user=self.usuario, passwd=self.password)
         self.cursor = self.conexao.cursor(pymysql.cursors.DictCursor) # Os resultados vem em dicionario
 
     def disconnect(self):
@@ -36,10 +35,8 @@ class DataBase(object):
     
     def insert_rent(self, dic):
         dic['id_user'] = self.select('iduser','user', "cpf = '{}'".format(dic['id_user']))[0]['iduser']
-        print(dic)
-        self.cursor.execute ('INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES (%s,%s,%d,%s,%d,%s,%s,%f,%d)', (dic['desc'], dic['bairro'], int(dic['sit']), dic['rua'], int(dic['numero']), dic['complemento'], dic['cep'], float(dic['preco']), int(dic['id_user'])))
+        self.cursor.execute ('INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES ({},{},{},{},{},{},{},{},{})'.format(dic['desc'], dic['bairro'], int(dic['sit']), dic['rua'], int(dic['numero']), dic['complemento'], dic['cep'], float(dic['preco']), int(dic['id_user'])))
         self.conexao.commit()
-
     def update(self, dic, table, where=None): #dic vai ser um dicionário (field = value)
         query = "UPDATE " + table
         query = query + " SET " + ",".join([field + " = '" + value + "'" for field, value in dic.items()])
@@ -58,10 +55,10 @@ class DataBase(object):
         self.cursor.execute(query)
         self.conexao.commit()
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    data = DataBase()
-    data.connect()
+#     data = DataBase()
+#     data.connect()
 
 
     # #--------- Deu certo ----------------
@@ -103,4 +100,4 @@ if __name__ == '__main__':
 
     # data.update({'senha': '@naosei123'}, "user", "iduser = 1")
 
-    data.disconnect()
+    # data.disconnect()
