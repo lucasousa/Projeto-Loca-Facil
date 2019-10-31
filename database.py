@@ -6,8 +6,8 @@ class DataBase(object):
         self.host = 'localhost'
         self.usuario = 'root'
         self.db = 'locafacil'
-        self.password = 'samuel123'
-        self.port = 8001
+        self.password = 'lucas12'
+        # self.port = 8001
         self.conexao = None
         self.cursor = None
 
@@ -15,7 +15,7 @@ class DataBase(object):
         return md5(string.encode()).hexdigest()
 
     def connect(self):
-        self.conexao = pymysql.connect(host=self.host, db=self.db, port=self.port ,  user=self.usuario,passwd=self.password)
+        self.conexao = pymysql.connect(host=self.host, db=self.db,user=self.usuario,passwd=self.password)
         self.cursor = self.conexao.cursor(pymysql.cursors.DictCursor) # Os resultados vem em dicionario
 
     def disconnect(self):
