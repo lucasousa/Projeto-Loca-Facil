@@ -40,6 +40,7 @@ class Ui_Main(QtWidgets.QWidget):
         self.stack8 = QtWidgets.QMainWindow()
         self.stack9 = QtWidgets.QMainWindow()
 
+
         self.tela_inicio = Ui_telainicial()
         self.tela_inicio.setupUi(self.stack0)
 
@@ -69,6 +70,7 @@ class Ui_Main(QtWidgets.QWidget):
 
         self.tela_pesquisar = Ui_Pesquisar()
         self.tela_pesquisar.setupUi(self.stack9)
+       
 
         self.QtStack.addWidget(self.stack0) #Tela inicial
         self.QtStack.addWidget(self.stack1) #Tela login
@@ -116,10 +118,15 @@ class Main(QMainWindow, Ui_Main):
         self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin)    #Link para recuperar Login
         self.tela_recuperar_login.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Voltar da tela de recuperar login para a  tela  de login
         
+    
+
 
         #cadastro Usuário
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario)   #Cadastrar
         self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
+        
+        # self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario)   #Cadastrar
+        # self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
         
         #Cadastro Imóvel
         self.tela_cadastro_imovel.pushButton.clicked.connect(self.CadastrarImovel) #Abrindo tela de  cadastrar fotos e continuando o cadastro do imóvel
@@ -130,8 +137,11 @@ class Main(QMainWindow, Ui_Main):
         #contato
         self.tela_contato.pushButton.clicked.connect(self.Contato)
         
-        #MudarSenha
-        self.tela_recuperar_login.pushButton.clicked.connect(self.alteraSenha)
+        #verificar usuario e MudarSenha
+        self.tela_recuperar_login.pushButton.clicked.connect(self.verifica_User)
+
+  
+
 
 
     def Erro(self):
@@ -159,6 +169,7 @@ class Main(QMainWindow, Ui_Main):
     def AbrirTelaPesquisar(self):
         self.QtStack.setCurrentIndex(9)
 
+
     def login(self):
         dic = {}
         dic['op'] = 'Login'
@@ -174,17 +185,21 @@ class Main(QMainWindow, Ui_Main):
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'usuário e/ou senha inválido(s)')
 
-    def alteraSenha(self):
+    def verifica_User(self):
         dic = {}
-        dic['op'] = 'AlterarSenha'
+        dic['op'] = 'verifica_user_cpf'
         dic['usuario'] = self.tela_recuperar_login.lineEdit_7.text()
         dic['cpf'] = self.tela_recuperar_login.lineEdit_8.text()
         dic['senha'] = self.tela_recuperar_login.lineEdit_9.text()
         dic['repetir'] = self.tela_recuperar_login.lineEdit_10.text()
         
-        if(dic['senha'] != dic['repetir']):
-            QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas devem ser iguais!')
-            return 0
+        if((dic['senha'] != dic['repetir']) or len(dic['senha']) <=3 or len(dic['repetir']) <=3 ):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas devem ser iguais e maiores que 3 caracteres')
+            return False
+
+        if(len(dic['usuario']) <=2 or len(dic['cpf'])<11):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha os campos de forma correta!')
+            return False
 
         self.conexao.startConnection()
         self.conexao.sendMessage(str(dic))
@@ -197,7 +212,8 @@ class Main(QMainWindow, Ui_Main):
             self.AbrirTelaPrincipal()
         
         else:
-            QtWidgets.QMessageBox.about(None, 'Erro', 'usuário e/ou cpf inválido(s)')
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Dados inválidos')
+
 
     def CadastrarImovel(self):
         dicio = {}

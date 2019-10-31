@@ -79,23 +79,19 @@ class ClientThread(threading.Thread):
 
             self.db.disconnect()
         
-        elif(dic['op'] == 'AlterarSenha'):
+        elif(dic['op'] == 'verifica_user_cpf'):
             self.db.connect()
-            if(len(dic['cpf']) <=1 or len(dic['usuario']) <=1 ):
-                return False
-            else:
-                print("Entrouaququuq")
-                verificador = self.db.select("cpf, usuario", "user", "cpf='{}', usuario='{}'".format(dic['cpf'],dic['usuario']))
-                print("Verificador: ", verificador)
+            verificador = self.db.select("cpf", "user", "cpf='{}'".format(dic['cpf']))
             if(verificador == ()):
                 return False
-
-            if(verificador[0]['cpf'] == dic['cpf'] and verificador[0]['usuario'] == dic['usuario']):
-                self.db.update({'senha':dic['senha']}, "user", "cpf='{}".format(dic['cpf']))
+    
+            elif(verificador[0]['cpf'] == dic['cpf']):
+                dic['senha'] = self.db.crypt(dic['senha'])
+                self.db.update({'senha':dic['senha']}, "user", "cpf='{}'".format(dic['cpf']))
                 return True
             else:
                 return False
-            self.db.disconnect()   
+            self.db.disconnect() 
 
         elif (dic['op'] == 'Contato'):
             msg = EnviaEmail(dic['email'])
