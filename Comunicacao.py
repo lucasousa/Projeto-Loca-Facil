@@ -15,7 +15,7 @@ class Conex():
 		self.client_socket.send(content.encode()) 
 	
 	def receiveMessage(self):
-		return self.client_socket.recv(1024).decode()
+		return self.client_socket.recv(4096).decode()
 
 	def closeConnection(self):
 		self.client_socket.close()

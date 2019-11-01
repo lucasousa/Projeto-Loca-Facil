@@ -30,13 +30,15 @@ class DataBase(object):
         return self.cursor.fetchall() #pega todos os resultados da execução acima e retorna
         
     def insert_user(self, dic):
-        self.cursor.execute ('INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES (%s, %s, %s, %s, %s, %s, %s)',(  dic['nome'], dic['cpf'], dic['telefone'], dic['email'], dic['sexo'], dic['usuario'], self.crypt(dic['senha']) ))
+        self.cursor.execute("INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES ('{}','{}','{}','{}','{}','{}','{}')".format(  dic['nome'], dic['cpf'], dic['telefone'], dic['email'], dic['sexo'], dic['usuario'], self.crypt(dic['senha']) ))
         self.conexao.commit()
+        print("enenenenen")
     
     def insert_rent(self, dic):
-        dic['id_user'] = self.select('iduser','user', "cpf = '{}'".format(dic['id_user']))[0]['iduser']
-        self.cursor.execute ('INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES ({},{},{},{},{},{},{},{},{})'.format(dic['desc'], dic['bairro'], int(dic['sit']), dic['rua'], int(dic['numero']), dic['complemento'], dic['cep'], float(dic['preco']), int(dic['id_user'])))
+        dic['id_user'] = self.select('iduser','user', "cpf = {}".format(dic['id_user']))[0]['iduser']
+        self.cursor.execute("INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES ('{}','{}',{},'{}',{},{},'{}',{},'{}')".format(dic['desc'], dic['bairro'], int(dic['sit']), dic['rua'], int(dic['numero']), dic['complemento'], dic['cep'], float(dic['preco']), int(dic['id_user']) ))
         self.conexao.commit()
+       
     def update(self, dic, table, where=None): #dic vai ser um dicionário (field = value)
         query = "UPDATE " + table
         query = query + " SET " + ",".join([field + " = '" + value + "'" for field, value in dic.items()])
@@ -55,10 +57,10 @@ class DataBase(object):
         self.cursor.execute(query)
         self.conexao.commit()
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
 
-#     data = DataBase()
-#     data.connect()
+    data = DataBase()
+    data.connect()
 
 
     # #--------- Deu certo ----------------
@@ -68,23 +70,23 @@ class DataBase(object):
     # print(a)
     # #-------------------------------------
 
-    # dic = dict()
+    dic = dict()
 
-    # dic['nome'] = "Sousa"
-    # dic['cpf'] = "12345678911"
-    # dic['telefone'] = "89999329025"
-    # dic['email'] = "lucas@gmail.com"
-    # dic['sexo'] = "masculino"
-    # dic['usuario'] = "lucas"
-    # dic['senha'] = "lucasous"
+    dic['nome'] = "Nao sei"
+    dic['cpf'] = "12345678911"
+    dic['telefone'] = "89999329025"
+    dic['email'] = "lucas@gmail.com"
+    dic['sexo'] = "masculino"
+    dic['usuario'] = "lucas"
+    dic['senha'] = "lucasous"
 
     # #--------- Deu certo ----------------
-    # data.insert_user(dic)
+    data.insert_user(dic)
     # #-------------------------------------
 
 
-    # dicio= dict()
-    # dicio['desc'] = "Pais Tropical"
+    #dicio= dict()
+    #dicio['desc'] = "Pais Tropical"
     # dicio['bairro'] = "Junco"
     # dicio['sit'] = 1
     # dicio['rua'] = "Avenida Piauí"
@@ -100,4 +102,4 @@ class DataBase(object):
 
     # data.update({'senha': '@naosei123'}, "user", "iduser = 1")
 
-    # data.disconnect()
+    data.disconnect()
