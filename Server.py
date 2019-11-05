@@ -29,7 +29,8 @@ class ClientThread(threading.Thread):
                 pass
         received = pickle.loads(data)
         ack = self.defineOP(received)
-        # print(received)
+        print("Pacote recebido")
+        print(received)
         message = {
             'status': 'success' if ack else 'error'
         }

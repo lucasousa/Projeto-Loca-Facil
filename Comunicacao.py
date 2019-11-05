@@ -24,10 +24,9 @@ class Conex():
 			try:
 				received = pickle.loads(data)
 				break
-			except: 
+			except:
 				pass
 		received = pickle.loads(data)
-		print(received)
 		return received
 
 	def closeConnection(self):
