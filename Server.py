@@ -4,7 +4,9 @@ from ast import literal_eval
 from hashlib import md5
 from database import DataBase
 from contato import EnviaEmail
-
+import pickle
+from skimage.io import imsave, imread, imshow
+import numpy as np
 
 class ClientThread(threading.Thread):
     def __init__(self,clientAddress,clientsocket):
@@ -16,16 +18,19 @@ class ClientThread(threading.Thread):
 
     def run(self):
         ack = None
+        data = b''
+    
         while True:
-            packet = self.csocket.recv(6144).decode() 
+            packet = self.csocket.recv(6144) 
+            data += packet
             try:
-                packet = literal_eval(packet)
-                print(packet)
-                if(self.defineOP(packet)):
-                    ack = 1
+                received = pickle.loads(data)
                 break
             except:
                 pass
+        print('tá saindo')
+        received = pickle.loads(data)
+        print(received)
         message = {
             'status': 'success' if ack is not None else 'error'
         }

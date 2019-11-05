@@ -20,6 +20,7 @@ from Comunicacao import Conex
 import threading
 from ast import literal_eval
 import time
+import pickle
 
 
 class Ui_Main(QtWidgets.QWidget):
@@ -180,7 +181,7 @@ class Main(QMainWindow, Ui_Main):
         dic['login'] = self.tela_login.lineEdit_7.text()
         dic['senha'] = self.tela_login.lineEdit_8.text()
         self.conexao.startConnection()
-        self.conexao.sendMessage(str(dic))
+        self.conexao.sendMessage(pickle.dumps(dic))
         resp = self.conexao.receiveMessage()
         resp = literal_eval(resp)
         self.conexao.closeConnection()
@@ -206,9 +207,9 @@ class Main(QMainWindow, Ui_Main):
             return False
 
         self.conexao.startConnection()
-        self.conexao.sendMessage(str(dic))
+        self.conexao.sendMessage(pickle.dumps(dic))
         resp = self.conexao.receiveMessage()
-        resp = literal_eval(resp)
+        #resp = literal_eval(resp)
         self.conexao.closeConnection()
         
         if(resp['status'] == 'success'): #busca no banco
@@ -237,9 +238,9 @@ class Main(QMainWindow, Ui_Main):
             QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha todos os campos de forma correta')
         else:
             self.conexao.startConnection()
-            self.conexao.sendMessage(str(dicio))
-
-            resp = literal_eval(self.conexao.receiveMessage())
+            self.conexao.sendMessage(pickle.dumps(dicio))
+            resp = self.conexao.receiveMessage()
+            #resp = literal_eval(self.conexao.receiveMessage())
             if(resp['status']=='success'):
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Cadastro realizado com sucesso')
                 self.AbrirTelaCadastroFotos()
@@ -261,8 +262,8 @@ class Main(QMainWindow, Ui_Main):
             return False
 
         self.conexao.startConnection()
-        self.conexao.sendMessage(str(dic))
-        resp = literal_eval(self.conexao.receiveMessage())
+        self.conexao.sendMessage(pickle.dumps(dic))
+        resp = self.conexao.receiveMessage()
         self.conexao.closeConnection()
 
         if(resp['status'] == 'success'):
@@ -293,8 +294,8 @@ class Main(QMainWindow, Ui_Main):
             dic['usuario'] = user
             
             self.conexao.startConnection()
-            self.conexao.sendMessage(str(dic))
-            resp = literal_eval(self.conexao.receiveMessage())
+            self.conexao.sendMessage(pickle.dumps(dic))
+            resp = self.conexao.receiveMessage()
             self.conexao.closeConnection()
 
             if(resp['status'] == 'success'):
@@ -310,7 +311,7 @@ class Main(QMainWindow, Ui_Main):
                 dicio['usuario'] = user
                 dicio['senha'] = senha
                 self.conexao.startConnection()
-                self.conexao.sendMessage(str(dicio))
+                self.conexao.sendMessage(pickle.dumps(dicio))
                 self.conexao.receiveMessage()
                 self.conexao.closeConnection()
                 QtWidgets.QMessageBox.about(None, 'Ok', 'Usuário cadastrado com sucesso')
