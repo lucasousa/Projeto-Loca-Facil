@@ -30,8 +30,9 @@ class DataBase(object):
         return self.cursor.fetchall() #pega todos os resultados da execução acima e retorna
         
     def insert_user(self, dic):
-        self.cursor.execute('INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES ({},{},{},{},{},{},{})'.format(dic['nome'], dic['cpf'], dic['telefone'], dic['email'], dic['sexo'], dic['usuario'], self.crypt(dic['senha'])))
+        self.cursor.execute("INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES ('{}','{}','{}','{}','{}','{}','{}')".format(  dic['nome'], dic['cpf'], dic['telefone'], dic['email'], dic['sexo'], dic['usuario'], self.crypt(dic['senha']) ))
         self.conexao.commit()
+        print("enenenenen")
     
     def insert_rent(self, dic):
         dic['id_user'] = self.select('iduser','user', "cpf = '{}'".format(dic['id_user']))[0]['iduser']
