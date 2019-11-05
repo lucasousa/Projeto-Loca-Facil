@@ -30,10 +30,13 @@ class ClientThread(threading.Thread):
         received = pickle.loads(data)
         ack = self.defineOP(received)
         print("Pacote recebido")
-        print(received)
-        message = {
-            'status': 'success' if ack else 'error'
-        }
+        print (ack)
+        if(type(ack) == bool):
+            message = {
+                'status': 'success' if ack else 'error'
+            }
+        else:
+            message = ack
         print(message)
         self.csocket.send(str(message).encode())
         self.csocket.close()
@@ -99,12 +102,11 @@ class ClientThread(threading.Thread):
             msg.enviar(dic['nome'], dic['message'])
             return True
         
-        # elif(dic['op'] == 'Pesquisar'):
-        #     self.db.connect()
-        #     search = self.db.select("preco", "rent", "bairro='{}'".format(dic['bairro'])) 
-        #     # self.csocket.send(str(search).encode())
-        #     self.csocket.close()
-        #     self.db.disconnect() 
+        elif(dic['op'] == 'Pesquisar'):
+            print("Este é o dic", dic)
+            self.db.connect()
+            search = self.db.select("bairro, preco, rua", "rent", "bairro='{}'".format(dic['bairro'])) 
+            return str(search) 
     
     def verificaLogin(self, dic):
         self.db.connect()
