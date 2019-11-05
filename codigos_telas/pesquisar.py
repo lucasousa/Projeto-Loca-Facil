@@ -23,7 +23,7 @@ class Ui_Pesquisar(object):
 "")
         self.toolButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../images/back_12955.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("Imagens/back_12955.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton.setIcon(icon)
         self.toolButton.setIconSize(QtCore.QSize(28, 28))
         self.toolButton.setObjectName("toolButton")
@@ -50,6 +50,15 @@ class Ui_Pesquisar(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+    
+    def add(self, lista):
+        self.listWidget.addItems(lista)
+        self.listar()
+    
+    def listar(self):
+        items = []
+        for i in range(self.listWidget.count()):
+            print(self.listWidget)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
