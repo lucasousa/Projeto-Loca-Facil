@@ -48,6 +48,7 @@ class ClientThread(threading.Thread):
             self.db.insert_user(dic)
             self.db.disconnect()
             return True
+
         elif (dic['op'] == 'CadImovel'):
             try:
                 self.db.connect()
@@ -56,6 +57,7 @@ class ClientThread(threading.Thread):
                 return True
             except:
                 return False
+        
         elif (dic['op'] == 'Login'):
             self.db.connect()
             
@@ -91,8 +93,13 @@ class ClientThread(threading.Thread):
             msg = EnviaEmail(dic['email'])
             msg.enviar(dic['nome'], dic['message'])
             return True
-
-
+        
+        elif(dic['op'] == 'Pesquisar'):
+            self.db.connect()
+            search = self.db.select("preco", "rent", "bairro='{}'".format(dic['bairro'])) 
+            # self.csocket.send(str(search).encode())
+            self.csocket.close()
+            self.db.disconnect() 
     
     def verificaLogin(self, dic):
         self.db.connect()

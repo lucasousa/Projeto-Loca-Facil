@@ -118,6 +118,8 @@ class Main(QMainWindow, Ui_Main):
         self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin)    #Link para recuperar Login
         self.tela_recuperar_login.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Voltar da tela de recuperar login para a  tela  de login
         
+        self.tela_pesquisar.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Voltar da tela de pesquisar
+        
     
 
 
@@ -136,6 +138,11 @@ class Main(QMainWindow, Ui_Main):
         
         #verificar usuario e MudarSenha
         self.tela_recuperar_login.pushButton.clicked.connect(self.verifica_User)
+        
+        #Pesquisar imóvel
+        self.tela_pesquisar.pushButton.clicked.connect(self.pesquisar)
+
+
 
   
 
@@ -310,7 +317,27 @@ class Main(QMainWindow, Ui_Main):
                 self.AbrirTelaInicial()
             else:
                 QtWidgets.QMessageBox.about(None, 'Erro', 'Esse usuário já existe')
-            
+    
+    
+    def pesquisar(self):
+        dic = {}
+        dic['op'] = 'Pesquisar'
+        dic['bairro'] = self.tela_pesquisar.lineEdit.text()
+        if(len(dic['bairro']) <=1):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha o campo de forma correta')
+            return False
+        
+        self.conexao.startConnection()
+        self.conexao.sendMessage(str(dic))
+        resp = literal_eval(self.conexao.receiveMessage())
+        self.conexao.closeConnection()
+        resp = list(resp)
+        if(len(resp) == 0):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Nenhum imóvel encontrado')
+            return False
+        else:
+            self.tela_pesquisar.add(resp)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
