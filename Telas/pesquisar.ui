@@ -88,6 +88,16 @@ color: #FFFFFF;</string>
      <string>Pesquisar</string>
     </property>
    </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>55</x>
+      <y>130</y>
+      <width>811</width>
+      <height>431</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
