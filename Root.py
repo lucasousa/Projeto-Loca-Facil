@@ -119,6 +119,8 @@ class Main(QMainWindow, Ui_Main):
         self.tela_login.toolButton.clicked.connect(self.AbrirTelaRecuperarLogin)    #Link para recuperar Login
         self.tela_recuperar_login.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Voltar da tela de recuperar login para a  tela  de login
         
+        self.tela_pesquisar.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Voltar da tela de pesquisar
+        
     
 
 
@@ -137,6 +139,11 @@ class Main(QMainWindow, Ui_Main):
         
         #verificar usuario e MudarSenha
         self.tela_recuperar_login.pushButton.clicked.connect(self.verifica_User)
+        
+        #Pesquisar imóvel
+        # self.tela_pesquisar.pushButton.clicked.connect(self.pesquisar)
+
+
 
   
 
@@ -175,13 +182,13 @@ class Main(QMainWindow, Ui_Main):
         dic['senha'] = self.tela_login.lineEdit_8.text()
         self.conexao.startConnection()
         self.conexao.sendMessage(pickle.dumps(dic))
-        resp = self.conexao.receiveMessage()
+        resp = self.conexao.client_socket.recv(6144).decode()
         resp = literal_eval(resp)
-        self.conexao.closeConnection()
         if(resp['status'] == 'success'): #busca no banco
             self.AbrirTelaPrincipal()
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'usuário e/ou senha inválido(s)')
+        self.conexao.closeConnection()
 
     def verifica_User(self):
         dic = {}
@@ -201,8 +208,8 @@ class Main(QMainWindow, Ui_Main):
 
         self.conexao.startConnection()
         self.conexao.sendMessage(pickle.dumps(dic))
-        resp = self.conexao.receiveMessage()
-        #resp = literal_eval(resp)
+        resp = self.conexao.client_socket.recv(6144).decode()
+        resp = literal_eval(resp)
         self.conexao.closeConnection()
         
         if(resp['status'] == 'success'): #busca no banco
@@ -232,7 +239,8 @@ class Main(QMainWindow, Ui_Main):
         else:
             self.conexao.startConnection()
             self.conexao.sendMessage(pickle.dumps(dicio))
-            resp = self.conexao.receiveMessage()
+            resp = self.conexao.client_socket.recv(6144).decode()
+            resp = literal_eval(resp)
             #resp = literal_eval(self.conexao.receiveMessage())
             if(resp['status']=='success'):
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Cadastro realizado com sucesso')
@@ -256,7 +264,8 @@ class Main(QMainWindow, Ui_Main):
 
         self.conexao.startConnection()
         self.conexao.sendMessage(pickle.dumps(dic))
-        resp = self.conexao.receiveMessage()
+        resp = self.conexao.client_socket.recv(6144).decode()
+        resp = literal_eval(resp)
         self.conexao.closeConnection()
 
         if(resp['status'] == 'success'):
@@ -285,14 +294,14 @@ class Main(QMainWindow, Ui_Main):
             dic = {}
             dic['op'] = 'VerifyCadUser'
             dic['usuario'] = user
-            
             self.conexao.startConnection()
             self.conexao.sendMessage(pickle.dumps(dic))
-            resp = self.conexao.receiveMessage()
+            resp = self.conexao.client_socket.recv(6144).decode()
+            resp = literal_eval(resp)
             self.conexao.closeConnection()
+            
 
             if(resp['status'] == 'success'):
-
                 senha = self.tela_cadastro_usuario.lineEdit_10.text()
                 dicio = {}
                 dicio['op'] = 'CadUser'
@@ -305,13 +314,33 @@ class Main(QMainWindow, Ui_Main):
                 dicio['senha'] = senha
                 self.conexao.startConnection()
                 self.conexao.sendMessage(pickle.dumps(dicio))
-                self.conexao.receiveMessage()
+                self.conexao.client_socket.recv(6144).decode()
                 self.conexao.closeConnection()
                 QtWidgets.QMessageBox.about(None, 'Ok', 'Usuário cadastrado com sucesso')
                 self.AbrirTelaInicial()
             else:
                 QtWidgets.QMessageBox.about(None, 'Erro', 'Esse usuário já existe')
-            
+    
+    
+    # def pesquisar(self):
+    #     dic = {}
+    #     dic['op'] = 'Pesquisar'
+    #     dic['bairro'] = self.tela_pesquisar.lineEdit.text()
+    #     if(len(dic['bairro']) <=1):
+    #         QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha o campo de forma correta')
+    #         return False
+        
+    #     self.conexao.startConnection()
+    #     self.conexao.sendMessage(str(dic))
+    #     resp = literal_eval(self.conexao.receiveMessage())
+    #     self.conexao.closeConnection()
+    #     resp = list(resp)
+    #     if(len(resp) == 0):
+    #         QtWidgets.QMessageBox.about(None, 'Erro', 'Nenhum imóvel encontrado')
+    #         return False
+    #     else:
+    #         self.tela_pesquisar.add(resp)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

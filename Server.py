@@ -5,7 +5,6 @@ from hashlib import md5
 from database import DataBase
 from contato import EnviaEmail
 import pickle
-from skimage.io import imsave, imread, imshow
 import numpy as np
 
 class ClientThread(threading.Thread):
@@ -28,11 +27,12 @@ class ClientThread(threading.Thread):
                 break
             except:
                 pass
-        print('tá saindo')
         received = pickle.loads(data)
+        ack = self.defineOP(received)
+        print("Pacote recebido")
         print(received)
         message = {
-            'status': 'success' if ack is not None else 'error'
+            'status': 'success' if ack else 'error'
         }
         print(message)
         self.csocket.send(str(message).encode())
@@ -53,6 +53,7 @@ class ClientThread(threading.Thread):
             self.db.insert_user(dic)
             self.db.disconnect()
             return True
+
         elif (dic['op'] == 'CadImovel'):
             try:
                 self.db.connect()
@@ -61,6 +62,7 @@ class ClientThread(threading.Thread):
                 return True
             except:
                 return False
+        
         elif (dic['op'] == 'Login'):
             self.db.connect()
             
@@ -96,8 +98,13 @@ class ClientThread(threading.Thread):
             msg = EnviaEmail(dic['email'])
             msg.enviar(dic['nome'], dic['message'])
             return True
-
-
+        
+        # elif(dic['op'] == 'Pesquisar'):
+        #     self.db.connect()
+        #     search = self.db.select("preco", "rent", "bairro='{}'".format(dic['bairro'])) 
+        #     # self.csocket.send(str(search).encode())
+        #     self.csocket.close()
+        #     self.db.disconnect() 
     
     def verificaLogin(self, dic):
         self.db.connect()
