@@ -141,7 +141,7 @@ class Main(QMainWindow, Ui_Main):
         self.tela_recuperar_login.pushButton.clicked.connect(self.verifica_User)
         
         #Pesquisar imóvel
-        self.tela_pesquisar.pushButton.clicked.connect(self.pesquisar)
+        # self.tela_pesquisar.pushButton.clicked.connect(self.pesquisar)
 
 
 
@@ -183,12 +183,12 @@ class Main(QMainWindow, Ui_Main):
         self.conexao.startConnection()
         self.conexao.sendMessage(pickle.dumps(dic))
         resp = self.conexao.receiveMessage()
-        resp = literal_eval(resp)
-        self.conexao.closeConnection()
+        #resp = literal_eval(resp)
         if(resp['status'] == 'success'): #busca no banco
             self.AbrirTelaPrincipal()
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'usuário e/ou senha inválido(s)')
+        self.conexao.closeConnection()
 
     def verifica_User(self):
         dic = {}
@@ -320,24 +320,24 @@ class Main(QMainWindow, Ui_Main):
                 QtWidgets.QMessageBox.about(None, 'Erro', 'Esse usuário já existe')
     
     
-    def pesquisar(self):
-        dic = {}
-        dic['op'] = 'Pesquisar'
-        dic['bairro'] = self.tela_pesquisar.lineEdit.text()
-        if(len(dic['bairro']) <=1):
-            QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha o campo de forma correta')
-            return False
+    # def pesquisar(self):
+    #     dic = {}
+    #     dic['op'] = 'Pesquisar'
+    #     dic['bairro'] = self.tela_pesquisar.lineEdit.text()
+    #     if(len(dic['bairro']) <=1):
+    #         QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha o campo de forma correta')
+    #         return False
         
-        self.conexao.startConnection()
-        self.conexao.sendMessage(str(dic))
-        resp = literal_eval(self.conexao.receiveMessage())
-        self.conexao.closeConnection()
-        resp = list(resp)
-        if(len(resp) == 0):
-            QtWidgets.QMessageBox.about(None, 'Erro', 'Nenhum imóvel encontrado')
-            return False
-        else:
-            self.tela_pesquisar.add(resp)
+    #     self.conexao.startConnection()
+    #     self.conexao.sendMessage(str(dic))
+    #     resp = literal_eval(self.conexao.receiveMessage())
+    #     self.conexao.closeConnection()
+    #     resp = list(resp)
+    #     if(len(resp) == 0):
+    #         QtWidgets.QMessageBox.about(None, 'Erro', 'Nenhum imóvel encontrado')
+    #         return False
+    #     else:
+    #         self.tela_pesquisar.add(resp)
 
 
 if __name__ == '__main__':

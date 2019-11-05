@@ -1,6 +1,6 @@
 import socket 
 import time
-from skimage.io import imsave, imshow, imread
+# from skimage.io import imsave, imshow, imread
 import pickle
 
 class Conex():
@@ -17,7 +17,18 @@ class Conex():
 		self.client_socket.send(content) 
 	
 	def receiveMessage(self):
-		return pickle.loads(self.client_socket.recv(6144))
+		data = b''
+		while True:
+			packet = self.client_socket.recv(6144) 
+			data += packet
+			try:
+				received = pickle.loads(data)
+				break
+			except: 
+				pass
+		received = pickle.loads(data)
+		print(received)
+		return received
 
 	def closeConnection(self):
 		self.client_socket.close()

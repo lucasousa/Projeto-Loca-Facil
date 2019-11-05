@@ -6,7 +6,7 @@ class DataBase(object):
         self.host = 'localhost'
         self.usuario = 'root'
         self.db = 'locafacil'
-        self.password = 'samuel123'
+        self.password = 'lucas12'
         self.conexao = None
         self.cursor = None
 
@@ -14,8 +14,8 @@ class DataBase(object):
         return md5(string.encode()).hexdigest()
 
     def connect(self):
-        self.conexao = pymysql.connect(host=self.host, db=self.db, port = 8001,user=self.usuario, passwd=self.password)
-        self.cursor = self.conexao.cursor(pymysql.cursors.DictCursor) # Os resultados vem em dicionario
+        self.conexao = pymysql.connect(host=self.host, db=self.db, user=self.usuario, passwd=self.password)
+        self.cursor = self.conexao.cursor() # Os resultados vem em dicionario
 
     def disconnect(self):
         self.conexao.close()
@@ -30,9 +30,8 @@ class DataBase(object):
         return self.cursor.fetchall() #pega todos os resultados da execução acima e retorna
         
     def insert_user(self, dic):
-        self.cursor.execute("INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES ('{}','{}','{}','{}','{}','{}','{}')".format(  dic['nome'], dic['cpf'], dic['telefone'], dic['email'], dic['sexo'], dic['usuario'], self.crypt(dic['senha']) ))
+        self.cursor.execute("INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES ({},{},{},{},{},{},{})".format(  str(dic['nome']), str(dic['cpf']), str(dic['telefone']), str(dic['email']), str(dic['sexo']), str(dic['usuario']), self.crypt(dic['senha']) ))
         self.conexao.commit()
-        print("enenenenen")
     
     def insert_rent(self, dic):
         dic['id_user'] = self.select('iduser','user', "cpf = '{}'".format(dic['id_user']))[0]['iduser']
