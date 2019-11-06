@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main_tela.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -89,6 +89,15 @@ class Ui_maintela(object):
         self.textBrowser.setGeometry(QtCore.QRect(830, 60, 121, 31))
         self.textBrowser.setStyleSheet("border: none;")
         self.textBrowser.setObjectName("textBrowser")
+        self.toolButton_7 = QtWidgets.QToolButton(self.centralwidget)
+        self.toolButton_7.setGeometry(QtCore.QRect(20, 140, 471, 331))
+        self.toolButton_7.setStyleSheet("border: none;")
+        self.toolButton_7.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("Imagens/casa-pesquisa.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButton_7.setIcon(icon1)
+        self.toolButton_7.setIconSize(QtCore.QSize(250, 250))
+        self.toolButton_7.setObjectName("toolButton_7")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -109,7 +118,7 @@ class Ui_maintela(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; color:#A52A2A;\">Encerrar Sessão</span></p></body></html>"))
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600; color:#ff0000;\">Encerrar Sessão</span></p></body></html>"))
 
 
 if __name__ == "__main__":

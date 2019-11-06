@@ -103,10 +103,15 @@ class ClientThread(threading.Thread):
             return True
         
         elif(dic['op'] == 'Pesquisar'):
-            print("Este é o dic", dic)
             self.db.connect()
             search = self.db.select("bairro, preco, rua", "rent", "bairro='{}'".format(dic['bairro'])) 
             return str(search) 
+            self.db.disconnect() 
+        elif(dic['op'] == 'verTodos'):
+            self.db.connect()
+            search = self.db.select("bairro, preco, rua", "rent") 
+            return str(search) 
+            self.db.disconnect() 
     
     def verificaLogin(self, dic):
         self.db.connect()

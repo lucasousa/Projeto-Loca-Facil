@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
     
 class Ui_Pesquisar(object):
     def loadData(self, lista):
+        self.tableWidget.setRowCount(0)
         for row_number in range(len(lista)):
             self.tableWidget.insertRow(row_number)
             self.tableWidget.setItem(row_number, 0, QtWidgets.QTableWidgetItem(lista[row_number]['bairro']))
