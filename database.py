@@ -45,7 +45,7 @@ class DataBase(object):
         
         if(where):
             query = query + " WHERE " + where
-
+        print(query)
         self.cursor.execute(query)
         self.conexao.commit()
     

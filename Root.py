@@ -9,6 +9,7 @@ from codigos_telas.contato import Ui_contato
 from codigos_telas.sobre import Ui_Sobre
 from codigos_telas.recuperar_login import Ui_recuperar_login
 from codigos_telas.cadastrofotos import Ui_cadastrofotos
+from codigos_telas.ver_todos import Ui_ver_todos
 from codigos_telas.pesquisar import Ui_Pesquisar
 from PyQt5.QtGui import QPixmap
 import PyQt5
@@ -40,6 +41,7 @@ class Ui_Main(QtWidgets.QWidget):
         self.stack7 = QtWidgets.QMainWindow()
         self.stack8 = QtWidgets.QMainWindow()
         self.stack9 = QtWidgets.QMainWindow()
+        self.stack10 = QtWidgets.QMainWindow()
 
 
         self.tela_inicio = Ui_telainicial()
@@ -72,6 +74,9 @@ class Ui_Main(QtWidgets.QWidget):
         self.tela_pesquisar = Ui_Pesquisar()
         self.tela_pesquisar.setupUi(self.stack9)
        
+        self.tela_verTodos = Ui_ver_todos()
+        self.tela_verTodos.setupUi(self.stack10)
+       
 
         self.QtStack.addWidget(self.stack0) #Tela inicial
         self.QtStack.addWidget(self.stack1) #Tela login
@@ -83,6 +88,7 @@ class Ui_Main(QtWidgets.QWidget):
         self.QtStack.addWidget(self.stack7) #Tela de sobre
         self.QtStack.addWidget(self.stack8) #Tela de cadastro de fotos do imóvel
         self.QtStack.addWidget(self.stack9) #Tela de pesquisar
+        self.QtStack.addWidget(self.stack10) #Tela ver todos
 
 
 class Main(QMainWindow, Ui_Main):
@@ -105,7 +111,7 @@ class Main(QMainWindow, Ui_Main):
 
         #Main tela
         self.tela_principal.toolButton.clicked.connect(self.AbrirTelaCadImovel) #Cadastrar Imóvel
-        self.tela_principal.toolButton_3.clicked.connect(self.Erro)             #Visualizar Imóveis
+        self.tela_principal.toolButton_3.clicked.connect(self.AbrirTelaVerTodos)             #Visualizar Imóveis
         self.tela_principal.toolButton_4.clicked.connect(self.AbrirTelaContato) #Contato
         self.tela_principal.toolButton_5.clicked.connect(self.AbrirTelaSobre)   #Sobre
         self.tela_principal.toolButton_2.clicked.connect(self.AbrirTelaInicial) #Encerrar Sessão
@@ -121,6 +127,10 @@ class Main(QMainWindow, Ui_Main):
         
         self.tela_pesquisar.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Voltar da tela de pesquisar
         
+        self.tela_verTodos.toolButton.clicked.connect(self.AbrirTelaPrincipal) #voltar da tela de ver todos
+
+
+        #cadastro Usuário
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario)   #Cadastrar
         self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
         
@@ -131,6 +141,14 @@ class Main(QMainWindow, Ui_Main):
         self.tela_contato.pushButton.clicked.connect(self.Contato)
         
         self.tela_recuperar_login.pushButton.clicked.connect(self.verifica_User)
+        
+        #Pesquisar imóvel
+        self.tela_pesquisar.pushButton.clicked.connect(self.pesquisar)
+
+
+
+  
+
 
         self.tela_cadastrofoto.toolButton_2.clicked.connect(self.pegarImagem)
         self.tela_cadastrofoto.toolButton_3.clicked.connect(self.pegarImagem)
@@ -159,6 +177,9 @@ class Main(QMainWindow, Ui_Main):
         self.QtStack.setCurrentIndex(8)
     def AbrirTelaPesquisar(self):
         self.QtStack.setCurrentIndex(9)
+    def AbrirTelaVerTodos(self):
+        self.QtStack.setCurrentIndex(10)
+        self.verTodos()
 
 
     def login(self):
@@ -316,24 +337,39 @@ class Main(QMainWindow, Ui_Main):
                 QtWidgets.QMessageBox.about(None, 'Erro', 'Esse usuário já existe')
     
     
-    # def pesquisar(self):
-    #     dic = {}
-    #     dic['op'] = 'Pesquisar'
-    #     dic['bairro'] = self.tela_pesquisar.lineEdit.text()
-    #     if(len(dic['bairro']) <=1):
-    #         QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha o campo de forma correta')
-    #         return False
+    def pesquisar(self):
+        dic = {}
+        dic['op'] = 'Pesquisar'
+        dic['bairro'] = self.tela_pesquisar.lineEdit.text()
+        if(len(dic['bairro']) <1):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Preencha o campo de forma correta')
+            return False
         
-    #     self.conexao.startConnection()
-    #     self.conexao.sendMessage(str(dic))
-    #     resp = literal_eval(self.conexao.receiveMessage())
-    #     self.conexao.closeConnection()
-    #     resp = list(resp)
-    #     if(len(resp) == 0):
-    #         QtWidgets.QMessageBox.about(None, 'Erro', 'Nenhum imóvel encontrado')
-    #         return False
-    #     else:
-    #         self.tela_pesquisar.add(resp)
+        self.conexao.startConnection()
+        self.conexao.sendMessage(pickle.dumps(dic))
+        resp = self.conexao.client_socket.recv(6144).decode()
+        resp = literal_eval(resp)
+        self.conexao.closeConnection()
+        if(len(resp) == 0):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Nenhum imóvel encontrado')
+            return False
+        else:
+            self.tela_pesquisar.loadData(resp)
+
+    def verTodos(self):
+        dic = {}
+        dic['op'] = 'verTodos'
+        
+        self.conexao.startConnection()
+        self.conexao.sendMessage(pickle.dumps(dic))
+        resp = self.conexao.client_socket.recv(6144).decode()
+        resp = literal_eval(resp)
+        self.conexao.closeConnection()
+        if(len(resp) == 0):
+            QtWidgets.QMessageBox.about(None, 'Erro', 'Não Existe nenhum imóvel')
+            return False
+        else:
+            self.tela_verTodos.loadData(resp)
 
 
 if __name__ == '__main__':
