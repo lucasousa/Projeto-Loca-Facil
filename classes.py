@@ -80,7 +80,6 @@ class Rent(object):
 		self.__complement   = None
 		self.__cep          = None
 		self.__price        = None
-		self.__quality      = None #
 		self.__id           = Rent.__id #
 		Rent.__id += 1
 
