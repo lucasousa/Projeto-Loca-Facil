@@ -13,16 +13,22 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ver_todos(object):
     def loadData(self, lista):
         self.tableWidget.setRowCount(0)
+        self.buttons = []
+        self.infos = []
         for row_number in range(len(lista)):
             self.tableWidget.insertRow(row_number)
             self.tableWidget.setItem(row_number, 0, QtWidgets.QTableWidgetItem(lista[row_number]['bairro']))
             self.tableWidget.setItem(row_number, 1, QtWidgets.QTableWidgetItem(lista[row_number]['rua']))
             self.tableWidget.setItem(row_number, 2, QtWidgets.QTableWidgetItem(str(lista[row_number]['preco'])))
-            btn = QtWidgets.QPushButton(self.tableWidget)
-            btn.setText("ver Informações")
-            btn.setStyleSheet("background-color: #345995;\n"
+            self.infos.append(lista[row_number])
+            self.buttons.append(QtWidgets.QPushButton(self.tableWidget))
+            self.buttons[-1].setText("ver Informações")
+            self.buttons[-1].setStyleSheet("background-color: #345995;\n"
             "color: #FFFFFF;")
-            self.tableWidget.setCellWidget(row_number, 3, btn)
+            self.tableWidget.setCellWidget(row_number, 3, self.buttons[-1])
+        print(self.buttons)
+        print(self.infos)
+        print(len(self.buttons))
    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")

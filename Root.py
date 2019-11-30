@@ -145,6 +145,7 @@ class Main(QMainWindow, Ui_Main):
         self.tela_cadastrofoto.toolButton_3.clicked.connect(self.pegarImagem)
         self.tela_cadastrofoto.toolButton_5.clicked.connect(self.pegarImagem)
 
+
     def Erro(self):
         QtWidgets.QMessageBox.about(None, "Erro","Função em desenvolvimento")
 
@@ -216,6 +217,10 @@ class Main(QMainWindow, Ui_Main):
         
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'Dados inválidos')
+
+    def pegarDados(self):
+        print('cliquei')
+
 
     def pegarImagem(self):
         self.fotos.append(self.tela_cadastrofoto.pushButton_handler())
@@ -370,6 +375,8 @@ class Main(QMainWindow, Ui_Main):
             return False
         else:
             self.tela_verTodos.loadData(resp)
+            for x in range(len(self.tela_verTodos.buttons)):
+                self.tela_verTodos.buttons[x].clicked.connect(self.pegarDados)
 
 
 if __name__ == '__main__':
