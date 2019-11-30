@@ -114,9 +114,9 @@ class Ui_cadastrofotos(object):
         self.label_6.setText(_translate("MainWindow", "   Imagem 3"))
         self.toolButton_5.setText(_translate("MainWindow", "Procurar"))
         self.pushButton.setText(_translate("MainWindow", "Confirmar"))
-        self.toolButton_2.clicked.connect(self.pushButton_handler)
+        """self.toolButton_2.clicked.connect(self.pushButton_handler)
         self.toolButton_3.clicked.connect(self.pushButton_handler)
-        self.toolButton_5.clicked.connect(self.pushButton_handler)
+        self.toolButton_5.clicked.connect(self.pushButton_handler)"""
 
 
 if __name__ == "__main__":

@@ -5,7 +5,8 @@ from hashlib import md5
 from database import DataBase
 from contato import EnviaEmail
 import pickle
-import numpy as np
+from skimage.io import imread, imsave, imshow
+from random import randint
 
 class ClientThread(threading.Thread):
     def __init__(self,clientAddress,clientsocket):
@@ -20,7 +21,7 @@ class ClientThread(threading.Thread):
         data = b''
     
         while True:
-            packet = self.csocket.recv(6144) 
+            packet = self.csocket.recv(50*1024) 
             data += packet
             try:
                 received = pickle.loads(data)
@@ -111,7 +112,11 @@ class ClientThread(threading.Thread):
             self.db.connect()
             search = self.db.select("bairro, preco, rua, id_user", "rent") 
             return str(search) 
-            self.db.disconnect() 
+            self.db.disconnect()
+        elif(dic['op'] == 'CadFoto'):
+            imsave("imagedatabase/{}".format(dic['FileName']),dic['content'])
+            return True
+
     
     def verificaLogin(self, dic):
         self.db.connect()

@@ -22,6 +22,7 @@ import threading
 from ast import literal_eval
 import time
 import pickle
+from skimage.io import imsave, imread, imshow
 
 
 class Ui_Main(QtWidgets.QWidget):
@@ -140,18 +141,11 @@ class Main(QMainWindow, Ui_Main):
         #Pesquisar imóvel
         self.tela_pesquisar.pushButton.clicked.connect(self.pesquisar)
 
-<<<<<<< HEAD
-=======
-
-
-  
-
-
         self.tela_cadastrofoto.toolButton_2.clicked.connect(self.pegarImagem)
         self.tela_cadastrofoto.toolButton_3.clicked.connect(self.pegarImagem)
         self.tela_cadastrofoto.toolButton_5.clicked.connect(self.pegarImagem)
 
->>>>>>> 546b347f3f168a402e15d38dc8f8114362daa998
+
     def Erro(self):
         QtWidgets.QMessageBox.about(None, "Erro","Função em desenvolvimento")
 
@@ -224,13 +218,13 @@ class Main(QMainWindow, Ui_Main):
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'Dados inválidos')
 
-<<<<<<< HEAD
-=======
+    def pegarDados(self):
+        print('cliquei')
+
+
     def pegarImagem(self):
-        print(self.tela_cadastrofoto.pushButton_handler())
+        self.fotos.append(self.tela_cadastrofoto.pushButton_handler())
 
-
->>>>>>> 546b347f3f168a402e15d38dc8f8114362daa998
     def CadastrarImovel(self):
         dicio = {}
         dicio['op'] = 'CadImovel'
@@ -256,20 +250,28 @@ class Main(QMainWindow, Ui_Main):
             if(resp['status']=='success'):
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Cadastro realizado com sucesso')
                 self.AbrirTelaCadastroFotos()
-                self.dic = {}  
+                self.fotos = []  
                 self.tela_cadastrofoto.pushButton.clicked.connect(self.CadastroFotos)
             else:
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Ocorreu um erro de conexão, tente novamente mais tarde')
             self.conexao.closeConnection()
-            
-<<<<<<< HEAD
-=======
+
     def CadastroFotos(self):
-        print(self.dic)
+        print(self.fotos)
+        caminhos = []
+        for x in self.fotos:
+            caminhos.append(x.split('/')[-1])
+        for source, name in zip(self.fotos, caminhos):
+            dic = {}
+            dic['op'] = 'CadFoto'
+            arq = imread(source)
+            dic['content'] = arq
+            dic['FileName'] = name
+            self.conexao.startConnection()
+            self.conexao.sendMessage(pickle.dumps(dic))
+            self.conexao.closeConnection()
+        self.AbrirTelaPrincipal()
 
-        self.AbrirTelaInicial()
-
->>>>>>> 546b347f3f168a402e15d38dc8f8114362daa998
     def Contato(self):
         dic={}
         dic['op'] = 'Contato' 
@@ -321,7 +323,7 @@ class Main(QMainWindow, Ui_Main):
             
 
             if(resp['status'] == 'success'):
-                senha = self.tela_cadastro_usuario.lineEdit_10.text()
+                senha = self.tela_cadastro_usuario.lineEdit_7.text()
                 dicio = {}
                 dicio['op'] = 'CadUser'
                 dicio['nome'] = nome
@@ -373,6 +375,8 @@ class Main(QMainWindow, Ui_Main):
             return False
         else:
             self.tela_verTodos.loadData(resp)
+            for x in range(len(self.tela_verTodos.buttons)):
+                self.tela_verTodos.buttons[x].clicked.connect(self.pegarDados)
 
 
 if __name__ == '__main__':
