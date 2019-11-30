@@ -2,3 +2,4 @@
 *.ipynb
 __pycache__/
 codigos_telas/__pycache__/
+imagedatabase/
