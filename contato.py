@@ -18,7 +18,7 @@ class EnviaEmail():
         # neste caso usaremos MIMEText para enviar
         # somente texto
         message = MIMEText(nome)
-        message['subject'] = mensagem
+        message['subject'] = str(mensagem) + ' ' + str(self.from_addr)
         message['from'] = self.from_addr
         message['to'] = ', '.join(self.to_addrs)
         # conectaremos de forma segura usando SSL

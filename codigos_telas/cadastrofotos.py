@@ -7,6 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QFileDialog, QInputDialog, QLineEdit
+from PyQt5.QtGui import QIcon
 
 class Ui_cadastrofotos(object):
     def setupUi(self, MainWindow):
@@ -87,6 +89,15 @@ class Ui_cadastrofotos(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    def pushButton_handler(self):
+        print("Botão pressionado")
+        return self.open_dialog_box()
+
+    def open_dialog_box(self):
+        filename = QFileDialog.getOpenFileName()
+        path = filename[0]
+        return path
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -103,13 +114,16 @@ class Ui_cadastrofotos(object):
         self.label_6.setText(_translate("MainWindow", "   Imagem 3"))
         self.toolButton_5.setText(_translate("MainWindow", "Procurar"))
         self.pushButton.setText(_translate("MainWindow", "Confirmar"))
+        self.toolButton_2.clicked.connect(self.pushButton_handler)
+        self.toolButton_3.clicked.connect(self.pushButton_handler)
+        self.toolButton_5.clicked.connect(self.pushButton_handler)
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = Ui_cadastrofotos()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

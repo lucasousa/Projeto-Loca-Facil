@@ -129,21 +129,29 @@ class Main(QMainWindow, Ui_Main):
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario)   #Cadastrar
         self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
         
-        #Cadastro Imóvel
         self.tela_cadastro_imovel.pushButton.clicked.connect(self.CadastrarImovel) #Abrindo tela de  cadastrar fotos e continuando o cadastro do imóvel
 
-        #Sobre
         self.tela_sobre.toolButton.clicked.connect(self.AbrirTelaPrincipal)
 
-        #contato
         self.tela_contato.pushButton.clicked.connect(self.Contato)
         
-        #verificar usuario e MudarSenha
         self.tela_recuperar_login.pushButton.clicked.connect(self.verifica_User)
         
         #Pesquisar imóvel
         self.tela_pesquisar.pushButton.clicked.connect(self.pesquisar)
 
+<<<<<<< HEAD
+=======
+
+
+  
+
+
+        self.tela_cadastrofoto.toolButton_2.clicked.connect(self.pegarImagem)
+        self.tela_cadastrofoto.toolButton_3.clicked.connect(self.pegarImagem)
+        self.tela_cadastrofoto.toolButton_5.clicked.connect(self.pegarImagem)
+
+>>>>>>> 546b347f3f168a402e15d38dc8f8114362daa998
     def Erro(self):
         QtWidgets.QMessageBox.about(None, "Erro","Função em desenvolvimento")
 
@@ -216,6 +224,13 @@ class Main(QMainWindow, Ui_Main):
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'Dados inválidos')
 
+<<<<<<< HEAD
+=======
+    def pegarImagem(self):
+        print(self.tela_cadastrofoto.pushButton_handler())
+
+
+>>>>>>> 546b347f3f168a402e15d38dc8f8114362daa998
     def CadastrarImovel(self):
         dicio = {}
         dicio['op'] = 'CadImovel'
@@ -241,12 +256,21 @@ class Main(QMainWindow, Ui_Main):
             if(resp['status']=='success'):
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Cadastro realizado com sucesso')
                 self.AbrirTelaCadastroFotos()
+                self.dic = {}  
+                self.tela_cadastrofoto.pushButton.clicked.connect(self.CadastroFotos)
             else:
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Ocorreu um erro de conexão, tente novamente mais tarde')
             self.conexao.closeConnection()
             
+<<<<<<< HEAD
+=======
+    def CadastroFotos(self):
+        print(self.dic)
+
+        self.AbrirTelaInicial()
+
+>>>>>>> 546b347f3f168a402e15d38dc8f8114362daa998
     def Contato(self):
-        
         dic={}
         dic['op'] = 'Contato' 
         dic['nome'] = self.tela_contato.lineEdit_7.text()
