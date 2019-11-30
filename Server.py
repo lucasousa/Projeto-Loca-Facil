@@ -109,7 +109,7 @@ class ClientThread(threading.Thread):
             self.db.disconnect() 
         elif(dic['op'] == 'verTodos'):
             self.db.connect()
-            search = self.db.select("bairro, preco, rua", "rent") 
+            search = self.db.select("bairro, preco, rua, id_user", "rent") 
             return str(search) 
             self.db.disconnect() 
     

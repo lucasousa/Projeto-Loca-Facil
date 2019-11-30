@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>904</width>
+    <width>897</width>
     <height>600</height>
    </rect>
   </property>
@@ -16,13 +16,16 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 255);</string>
   </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonFollowStyle</enum>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QToolButton" name="toolButton">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>90</x>
       <y>50</y>
-      <width>41</width>
+      <width>50</width>
       <height>41</height>
      </rect>
     </property>
@@ -47,10 +50,10 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>50</y>
-      <width>451</width>
-      <height>41</height>
+      <x>169</x>
+      <y>51</y>
+      <width>491</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="contextMenuPolicy">
@@ -63,9 +66,9 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>660</x>
       <y>50</y>
-      <width>131</width>
+      <width>130</width>
       <height>41</height>
      </rect>
     </property>
@@ -88,15 +91,43 @@ color: #FFFFFF;</string>
      <string>Pesquisar</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="tableWidget_2">
     <property name="geometry">
      <rect>
-      <x>55</x>
-      <y>130</y>
-      <width>811</width>
-      <height>431</height>
+      <x>90</x>
+      <y>140</y>
+      <width>701</width>
+      <height>391</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #F2F4F3;
+font: 75 10pt &quot;Arial&quot;;
+font-weight:bold;</string>
+    </property>
+    <property name="gridStyle">
+     <enum>Qt::DashDotDotLine</enum>
+    </property>
+    <column>
+     <property name="text">
+      <string>Bairro</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Rua</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Preço</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Informações</string>
+     </property>
+    </column>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

@@ -43,7 +43,6 @@ class Ui_Main(QtWidgets.QWidget):
         self.stack9 = QtWidgets.QMainWindow()
         self.stack10 = QtWidgets.QMainWindow()
 
-
         self.tela_inicio = Ui_telainicial()
         self.tela_inicio.setupUi(self.stack0)
 
@@ -77,7 +76,6 @@ class Ui_Main(QtWidgets.QWidget):
         self.tela_verTodos = Ui_ver_todos()
         self.tela_verTodos.setupUi(self.stack10)
        
-
         self.QtStack.addWidget(self.stack0) #Tela inicial
         self.QtStack.addWidget(self.stack1) #Tela login
         self.QtStack.addWidget(self.stack2) #Tela principal
@@ -89,7 +87,6 @@ class Ui_Main(QtWidgets.QWidget):
         self.QtStack.addWidget(self.stack8) #Tela de cadastro de fotos do imóvel
         self.QtStack.addWidget(self.stack9) #Tela de pesquisar
         self.QtStack.addWidget(self.stack10) #Tela ver todos
-
 
 class Main(QMainWindow, Ui_Main):
     def __init__(self, parent=None):
@@ -128,8 +125,6 @@ class Main(QMainWindow, Ui_Main):
         self.tela_pesquisar.toolButton.clicked.connect(self.AbrirTelaPrincipal) #Voltar da tela de pesquisar
         
         self.tela_verTodos.toolButton.clicked.connect(self.AbrirTelaPrincipal) #voltar da tela de ver todos
-
-
         #cadastro Usuário
         self.tela_cadastro_usuario.pushButton.clicked.connect(self.CadastrarUsuario)   #Cadastrar
         self.tela_cadastro_usuario.pushButton_2.clicked.connect(self.AbrirTelaInicial) #Cancelar
@@ -149,16 +144,9 @@ class Main(QMainWindow, Ui_Main):
         #Pesquisar imóvel
         self.tela_pesquisar.pushButton.clicked.connect(self.pesquisar)
 
-
-
-  
-
-
-
     def Erro(self):
         QtWidgets.QMessageBox.about(None, "Erro","Função em desenvolvimento")
 
-    
     def AbrirTelaInicial(self):
         self.QtStack.setCurrentIndex(0)
     def AbrirTelaLogin(self):
@@ -228,19 +216,18 @@ class Main(QMainWindow, Ui_Main):
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'Dados inválidos')
 
-
     def CadastrarImovel(self):
         dicio = {}
         dicio['op'] = 'CadImovel'
-        dicio['desc'] = self.tela_cadastro_imovel.lineEdit_10.text()
-        dicio['bairro'] = self.tela_cadastro_imovel.lineEdit_5.text()
+        dicio['rua'] = self.tela_cadastro_imovel.lineEdit_1.text()
+        dicio['bairro'] = self.tela_cadastro_imovel.lineEdit_2.text()
+        dicio['complemento'] = self.tela_cadastro_imovel.lineEdit_3.text()
+        dicio['cep'] = self.tela_cadastro_imovel.lineEdit_4.text()
+        dicio['numero'] = self.tela_cadastro_imovel.lineEdit_5.text()
+        dicio['preco'] = self.tela_cadastro_imovel.lineEdit_6.text()
+        dicio['desc'] = self.tela_cadastro_imovel.lineEdit_7.text()
+        dicio['id_user'] = self.tela_cadastro_imovel.lineEdit_8.text()
         dicio['sit'] = 1
-        dicio['rua'] = self.tela_cadastro_imovel.lineEdit_7.text()
-        dicio['numero'] = self.tela_cadastro_imovel.lineEdit_9.text()
-        dicio['complemento'] = self.tela_cadastro_imovel.lineEdit_8.text()
-        dicio['cep'] = self.tela_cadastro_imovel.lineEdit_6.text()
-        dicio['preco'] = self.tela_cadastro_imovel.lineEdit_11.text()
-        dicio['id_user'] = self.tela_cadastro_imovel.lineEdit_12.text()
         
         verification = dicio['bairro'] == '' or dicio['rua'] == '' or dicio['numero'] == '' or len(dicio['cep']) != 8 or len(dicio['id_user']) != 11
         if(verification):
@@ -258,7 +245,6 @@ class Main(QMainWindow, Ui_Main):
                 QtWidgets.QMessageBox.about(None, 'Importante', 'Ocorreu um erro de conexão, tente novamente mais tarde')
             self.conexao.closeConnection()
             
-
     def Contato(self):
         
         dic={}
@@ -284,18 +270,18 @@ class Main(QMainWindow, Ui_Main):
         self.AbrirTelaPrincipal()
 
     def CadastrarUsuario(self):
-        nome = self.tela_cadastro_usuario.lineEdit_5.text()
-        cpf = self.tela_cadastro_usuario.lineEdit_7.text()
-        telefone = self.tela_cadastro_usuario.lineEdit_8.text()
-        email = self.tela_cadastro_usuario.lineEdit_9.text()
+        nome = self.tela_cadastro_usuario.lineEdit_1.text()
+        cpf = self.tela_cadastro_usuario.lineEdit_2.text()
+        telefone = self.tela_cadastro_usuario.lineEdit_3.text()
+        email = self.tela_cadastro_usuario.lineEdit_4.text()
         if(self.tela_cadastro_usuario.radioButton.isChecked()):
             sexo = 'Masculino'
         else:
             sexo = 'Feminino'
-        user = self.tela_cadastro_usuario.lineEdit_11.text()
+        user = self.tela_cadastro_usuario.lineEdit_5.text()
         verification = nome == '' or cpf == '' or telefone == '' or email == '' or not '@' in email 
         print(verification)
-        if(self.tela_cadastro_usuario.lineEdit_10.text() != self.tela_cadastro_usuario.lineEdit_12.text()):
+        if(self.tela_cadastro_usuario.lineEdit_6.text() != self.tela_cadastro_usuario.lineEdit_7.text()):
             QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas não coincidem')
         elif len(cpf) != 11:
             QtWidgets.QMessageBox.about(None, 'Erro', 'cpf inválido')
@@ -329,8 +315,7 @@ class Main(QMainWindow, Ui_Main):
                 self.AbrirTelaInicial()
             else:
                 QtWidgets.QMessageBox.about(None, 'Erro', 'Esse usuário já existe')
-    
-    
+
     def pesquisar(self):
         dic = {}
         dic['op'] = 'Pesquisar'

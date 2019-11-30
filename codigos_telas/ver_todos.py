@@ -12,30 +12,24 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_ver_todos(object):
     def loadData(self, lista):
-        self.tableWidget.setVerticalHeaderLabels(["Bairro","Preço","Rua","Ver Mais"])
         self.tableWidget.setRowCount(0)
         for row_number in range(len(lista)):
             self.tableWidget.insertRow(row_number)
             self.tableWidget.setItem(row_number, 0, QtWidgets.QTableWidgetItem(lista[row_number]['bairro']))
-            self.tableWidget.setItem(row_number, 1, QtWidgets.QTableWidgetItem(str(lista[row_number]['preco'])))
-            self.tableWidget.setItem(row_number, 2, QtWidgets.QTableWidgetItem(lista[row_number]['rua']))
+            self.tableWidget.setItem(row_number, 1, QtWidgets.QTableWidgetItem(lista[row_number]['rua']))
+            self.tableWidget.setItem(row_number, 2, QtWidgets.QTableWidgetItem(str(lista[row_number]['preco'])))
             btn = QtWidgets.QPushButton(self.tableWidget)
             btn.setText("ver Informações")
             btn.setStyleSheet("background-color: #345995;\n"
-"color: #FFFFFF;")
+            "color: #FFFFFF;")
             self.tableWidget.setCellWidget(row_number, 3, btn)
-
+   
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(880, 600)
+        MainWindow.resize(920, 650)
         MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(29, 100, 820, 431))
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(4)
-        self.tableWidget.setRowCount(0)
         self.toolButton = QtWidgets.QToolButton(self.centralwidget)
         self.toolButton.setGeometry(QtCore.QRect(40, 30, 60, 41))
         self.toolButton.setStyleSheet("border: none;\n"
@@ -44,8 +38,25 @@ class Ui_ver_todos(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("Imagens/back_12955.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton.setIcon(icon)
-        self.toolButton.setIconSize(QtCore.QSize(32, 32))
+        self.toolButton.setIconSize(QtCore.QSize(36, 36))
         self.toolButton.setObjectName("toolButton")
+        self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
+        self.tableWidget.setGeometry(QtCore.QRect(90, 140, 701, 391))
+        self.tableWidget.setStyleSheet("background-color: #F2F4F3;\n"
+"font: 75 8pt \"Arial\";\n"
+"font-weight:bold;")
+        self.tableWidget.setGridStyle(QtCore.Qt.DashDotDotLine)
+        self.tableWidget.setObjectName("tableWidget")
+        self.tableWidget.setColumnCount(4)
+        self.tableWidget.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(3, item)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -57,6 +68,14 @@ class Ui_ver_todos(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        item = self.tableWidget.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "Bairro"))
+        item = self.tableWidget.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "Rua"))
+        item = self.tableWidget.horizontalHeaderItem(2)
+        item.setText(_translate("MainWindow", "Preço"))
+        item = self.tableWidget.horizontalHeaderItem(3)
+        item.setText(_translate("MainWindow", "Informações"))
 
 
 if __name__ == "__main__":

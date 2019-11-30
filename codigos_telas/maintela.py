@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_maintela(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1006, 611)
+        MainWindow.resize(1006, 650)
         MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
