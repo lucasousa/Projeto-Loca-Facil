@@ -114,9 +114,9 @@ font: 75 12pt &quot;Gadugi&quot;;
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>220</x>
       <y>400</y>
-      <width>131</width>
+      <width>381</width>
       <height>41</height>
      </rect>
     </property>
@@ -144,7 +144,7 @@ color: #FFFFFF;</string>
      <rect>
       <x>211</x>
       <y>360</y>
-      <width>161</width>
+      <width>390</width>
       <height>21</height>
      </rect>
     </property>
