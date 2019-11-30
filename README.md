@@ -29,7 +29,7 @@
 - Para rodar o projeto, deve-se executar o arquivo Sever.py e depois o arquivo Root.py
 
 ## Tela Inicial
-<img src="Imagens/tela_de_inicio.png" width="650" height="400">
+<img src="Imagens/tela_de_inicio.PNG" width="650" height="400">
 
 ## Cadastro de Usuário
 <img src="Imagens/cadastro_usuario.PNG" width="650" height="400">
