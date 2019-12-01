@@ -33,7 +33,9 @@ class DataBase(object):
         self.cursor.execute("INSERT INTO user( nome, cpf, telefone, email, sexo, usuario, senha ) VALUES ('{}','{}','{}','{}','{}','{}','{}')".format(  str(dic['nome']), str(dic['cpf']), str(dic['telefone']), str(dic['email']), str(dic['sexo']), str(dic['usuario']), self.crypt(dic['senha']) ))
         self.conexao.commit()
 
-    
+    def insert_image(self, dic):
+        self.cursor.execute("INSERT INTO images(origem, id_rent) VALUES ('{}',{})".format(dic['FileName'],dic['id']))
+        self.conexao.commit()
     def insert_rent(self, dic):
         dic['id_user'] = self.select('iduser','user', "cpf = '{}'".format(dic['id_user']))[0]['iduser']
         self.cursor.execute("INSERT INTO rent(descricao, bairro, situacao, rua, numero, complemento, cep, preco, id_user ) VALUES ('{}','{}',{},'{}',{},'{}','{}',{},{})".format(dic['desc'], dic['bairro'], int(dic['sit']), dic['rua'], int(dic['numero']), dic['complemento'], dic['cep'], float(dic['preco']), int(dic['id_user'])))

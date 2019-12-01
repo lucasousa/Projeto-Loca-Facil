@@ -62,6 +62,9 @@ class ClientThread(threading.Thread):
             try:
                 self.db.connect()
                 self.db.insert_rent(dic)
+                #self.lastrent = self.db.select('idrent', 'rent', "rua='{}' AND numero='{}'".format(dic['rua'],dic['numero']))[0]['idrent']
+                #print('ID from last rent: ',self.lastrent)
+                #print(type(self.lastrent))
                 self.db.disconnect()
                 return True
             except:
@@ -108,14 +111,41 @@ class ClientThread(threading.Thread):
             search = self.db.select("bairro, preco, rua", "rent", "bairro='{}'".format(dic['bairro'])) 
             return str(search) 
             self.db.disconnect() 
+
         elif(dic['op'] == 'verTodos'):
             self.db.connect()
-            search = self.db.select("bairro, preco, rua, id_user", "rent") 
+            search = self.db.select("bairro, preco, rua, id_user, idrent", "rent") 
             return str(search) 
             self.db.disconnect()
+
         elif(dic['op'] == 'CadFoto'):
             imsave("imagedatabase/{}".format(dic['FileName']),dic['content'])
+            dic['FileName'] = 'imagedatabase/{}'.format(dic['FileName'])
+            print(dic['FileName'])
+            self.db.connect()
+            lista = self.db.select('idrent', 'rent')
+            idrents = []
+            for x in lista:
+                idrents.append(x['idrent'])
+            dic['id'] = max(idrents)
+            print(dic)
+            self.db.insert_image(dic)
+            self.db.disconnect()
             return True
+
+        elif(dic['op'] == 'GetImages'):
+            self.db.connect()
+            lista = self.db.select('origem', 'images', "id_rent = {}".format(dic['idrent']))
+            self.db.disconnect()
+            print(dic)
+            image_list = []
+            for x in lista:
+                image_list.append(imread(x['origem']))
+            print(image_list)
+            pickle.dumps(image_list)
+                
+            return None
+
 
     
     def verificaLogin(self, dic):
