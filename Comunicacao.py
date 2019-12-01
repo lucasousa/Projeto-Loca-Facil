@@ -19,7 +19,7 @@ class Conex():
 	def receiveMessage(self):
 		data = b''
 		while True:
-			packet = self.client_socket.recv(6144) 
+			packet = self.client_socket.recv(50*1024) 
 			data += packet
 			try:
 				received = pickle.loads(data)

@@ -65,7 +65,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `images` (
   `origem` VARCHAR(200) NOT NULL,
+  `idphoto` INT NOT NULL AUTO_INCREMENT,
   `id_rent` INT NOT NULL,
+  PRIMARY KEY (`idphoto`),
   CONSTRAINT `id_rent`
     FOREIGN KEY (`id_rent`)
     REFERENCES `locafacil`.`rent` (`idrent`)

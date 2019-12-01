@@ -23,6 +23,7 @@ from ast import literal_eval
 import time
 import pickle
 from skimage.io import imsave, imread, imshow
+from functools import partial
 
 
 class Ui_Main(QtWidgets.QWidget):
@@ -218,8 +219,19 @@ class Main(QMainWindow, Ui_Main):
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'Dados inválidos')
 
-    def pegarDados(self):
-        print('cliquei')
+    def pegarDados(self, numButton):
+        self.conexao.startConnection()
+        dicio = self.tela_verTodos.infos[numButton].copy()
+        dicio['op'] = 'GetImages'
+        self.conexao.sendMessage(pickle.dumps(dicio))
+        img_list = self.conexao.receiveMessage()
+        self.conexao.closeConnection()
+        self.conexao.startConnection()
+        self.conexao.client_socket.recv(6144)
+        self.conexao.closeConnection()
+        for x in img_list:
+            imshow(x)
+        print('cliquei em', numButton)
 
 
     def pegarImagem(self):
@@ -376,7 +388,7 @@ class Main(QMainWindow, Ui_Main):
         else:
             self.tela_verTodos.loadData(resp)
             for x in range(len(self.tela_verTodos.buttons)):
-                self.tela_verTodos.buttons[x].clicked.connect(self.pegarDados)
+                self.tela_verTodos.buttons[x].clicked.connect(partial(self.pegarDados, x))
 
 
 if __name__ == '__main__':
