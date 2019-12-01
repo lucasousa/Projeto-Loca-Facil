@@ -1,3 +1,5 @@
+#conector do python com o mysql (pymysql)
+#lib para criptografar senha em formato md5
 import pymysql
 from hashlib import md5
 
