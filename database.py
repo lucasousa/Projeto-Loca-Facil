@@ -6,7 +6,7 @@ class DataBase(object):
         self.host = 'localhost'
         self.usuario = 'root'
         self.db = 'locafacil'
-        self.password = 'samuel123'
+        self.password = 'lucas12'
         self.conexao = None
         self.cursor = None
 

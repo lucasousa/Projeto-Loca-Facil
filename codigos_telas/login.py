@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'login.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_login(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(900, 600)
+        MainWindow.resize(921, 631)
         MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonFollowStyle)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -54,7 +54,7 @@ class Ui_login(object):
         self.lineEdit_8.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit_8.setObjectName("lineEdit_8")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(340, 400, 131, 41))
+        self.pushButton.setGeometry(QtCore.QRect(220, 400, 381, 41))
         font = QtGui.QFont()
         font.setFamily("Gadugi")
         font.setPointSize(10)
@@ -65,24 +65,15 @@ class Ui_login(object):
         self.pushButton.setStyleSheet("background-color: #0A8754;\n"
 "color: #FFFFFF;")
         self.pushButton.setObjectName("pushButton")
-        self.toolButton = QtWidgets.QToolButton(self.centralwidget)
-        self.toolButton.setGeometry(QtCore.QRect(211, 360, 161, 21))
-        self.toolButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.toolButton.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.toolButton.setStyleSheet("color: rgb(255, 0, 127);\n"
+        self.esqueceu_senha = QtWidgets.QToolButton(self.centralwidget)
+        self.esqueceu_senha.setGeometry(QtCore.QRect(211, 360, 390, 21))
+        self.esqueceu_senha.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.esqueceu_senha.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.esqueceu_senha.setStyleSheet("color: rgb(255, 0, 127);\n"
 "font: 63 9pt \"Segoe UI Semibold\";\n"
 "text-decoration: underline;\n"
 "border: none;")
-        self.toolButton.setObjectName("toolButton")
-        self.toolButton_2 = QtWidgets.QToolButton(self.centralwidget)
-        self.toolButton_2.setGeometry(QtCore.QRect(110, 123, 41, 41))
-        self.toolButton_2.setStyleSheet("border: none;")
-        self.toolButton_2.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("Imagens/back_12955.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.toolButton_2.setIcon(icon)
-        self.toolButton_2.setIconSize(QtCore.QSize(32, 32))
-        self.toolButton_2.setObjectName("toolButton_2")
+        self.esqueceu_senha.setObjectName("esqueceu_senha")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -98,14 +89,14 @@ class Ui_login(object):
         self.label_5.setText(_translate("MainWindow", "Usuário"))
         self.label_6.setText(_translate("MainWindow", "Senha"))
         self.pushButton.setText(_translate("MainWindow", "Entrar"))
-        self.toolButton.setText(_translate("MainWindow", "Esqueceu sua senha?"))
+        self.esqueceu_senha.setText(_translate("MainWindow", "Esqueceu sua senha?"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = Ui_login()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
