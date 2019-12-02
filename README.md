@@ -18,12 +18,13 @@
 - MySql na versão 5.7.28
 - Skimage
 - NumPy
+- Matplotlib
 
 ## Funcionalidades 
 
 - Cadastro de Usuário
 - Cadastro de Imóvel
-- Visualização de informações de Imóveis para Aluguél
+- Visualização de informações de Imóveis para Aluguel
 
 ## Do uso
 
