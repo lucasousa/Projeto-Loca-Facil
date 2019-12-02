@@ -120,7 +120,6 @@ class Main(QMainWindow, Ui_Main):
         self.tela_cadastro_imovel.toolButton.clicked.connect(self.AbrirTelaPrincipal)   #Botão voltar (tela principal)
         self.tela_cadastro_imovel.pushButton_2.clicked.connect(self.AbrirTelaPrincipal) #Botão cancelar cadastro de imóvel
         
-        self.tela_login.pushButton.clicked.connect(self.AbrirTelaPrincipal)
         self.tela_login.esqueceu_senha.clicked.connect(self.AbrirTelaRecuperarLogin)    #Link para recuperar Login
         self.tela_recuperar_login.pushButton_2.clicked.connect(self.AbrirTelaLogin) #Voltar da tela de recuperar login para a  tela  de login
         
