@@ -22,35 +22,34 @@ class Ui_Pesquisar(object):
             self.tableWidget.setItem(row_number, 2, QtWidgets.QTableWidgetItem(str(lista[row_number]['preco'])))
             self.infos.append(lista[row_number])
             self.buttons.append(QtWidgets.QPushButton(self.tableWidget))
-            self.buttons[-1].setText("ver Informações")
+            self.buttons[-1].setText("ver foto")
             self.buttons[-1].setStyleSheet("background-color: #345995;\n"
             "color: #FFFFFF;")
             self.tableWidget.setCellWidget(row_number, 3, self.buttons[-1])
         print(self.buttons)
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1000, 650)
+        MainWindow.resize(1108, 670)
         MainWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
         MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonFollowStyle)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.toolButton = QtWidgets.QToolButton(self.centralwidget)
-        self.toolButton.setGeometry(QtCore.QRect(90, 50, 50, 41))
+        self.toolButton.setGeometry(QtCore.QRect(61, 50, 50, 41))
         self.toolButton.setStyleSheet("border: none;\n"
 "")
         self.toolButton.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("Imagens/back_12955.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton.setIcon(icon)
-        self.toolButton.setIconSize(QtCore.QSize(32, 32))
+        self.toolButton.setIconSize(QtCore.QSize(28, 28))
         self.toolButton.setObjectName("toolButton")
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(169, 51, 491, 40))
+        self.lineEdit.setGeometry(QtCore.QRect(139, 51, 741, 40))
         self.lineEdit.setContextMenuPolicy(QtCore.Qt.PreventContextMenu)
         self.lineEdit.setObjectName("lineEdit")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(660, 50, 130, 41))
+        self.pushButton.setGeometry(QtCore.QRect(869, 50, 141, 41))
         font = QtGui.QFont()
         font.setFamily("Gadugi")
         font.setPointSize(10)
@@ -62,13 +61,13 @@ class Ui_Pesquisar(object):
 "color: #FFFFFF;")
         self.pushButton.setObjectName("pushButton")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(90, 140, 701, 391))
+        self.tableWidget.setGeometry(QtCore.QRect(140, 140, 871, 461))
         self.tableWidget.setStyleSheet("background-color: #F2F4F3;\n"
-"font: 75 8pt \"Arial\";\n"
+"font: 75 10pt \"Arial\";\n"
 "font-weight:bold;")
         self.tableWidget.setGridStyle(QtCore.Qt.DashDotDotLine)
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(4)
+        self.tableWidget.setColumnCount(6)
         self.tableWidget.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, item)
@@ -78,6 +77,10 @@ class Ui_Pesquisar(object):
         self.tableWidget.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(5, item)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -85,9 +88,6 @@ class Ui_Pesquisar(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-    def pushButton_handler(self):
-        print("Botão pressionado")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -101,7 +101,11 @@ class Ui_Pesquisar(object):
         item = self.tableWidget.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "Preço"))
         item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("MainWindow", "Informações"))
+        item.setText(_translate("MainWindow", "Propritário"))
+        item = self.tableWidget.horizontalHeaderItem(4)
+        item.setText(_translate("MainWindow", "Telefone"))
+        item = self.tableWidget.horizontalHeaderItem(5)
+        item.setText(_translate("MainWindow", "Foto"))
 
 
 if __name__ == "__main__":

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>880</width>
-    <height>600</height>
+    <width>1083</width>
+    <height>724</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>30</y>
+      <y>60</y>
       <width>60</width>
       <height>41</height>
      </rect>
@@ -47,10 +47,10 @@
    <widget class="QTableWidget" name="tableWidget_2">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>110</y>
-      <width>701</width>
-      <height>391</height>
+      <x>130</x>
+      <y>130</y>
+      <width>871</width>
+      <height>461</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -78,7 +78,17 @@ font-weight:bold;</string>
     </column>
     <column>
      <property name="text">
-      <string>Informações</string>
+      <string>Propritário</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Telefone</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Foto</string>
      </property>
     </column>
    </widget>
