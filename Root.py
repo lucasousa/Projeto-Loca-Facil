@@ -16,7 +16,6 @@ import PyQt5
 import sys
 import os
 from PyQt5.QtCore import pyqtSlot
-from classes import Person, Rent, Renter, User
 from Comunicacao import Conex
 import threading
 from ast import literal_eval
