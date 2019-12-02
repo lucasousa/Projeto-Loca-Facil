@@ -17,6 +17,7 @@
 - Qt Design 
 - MySql na versão 5.7.28
 - Skimage
+- NumPy
 
 ## Funcionalidades 
 
@@ -28,6 +29,7 @@
 
 - Clone o projeto github (https://github.com/spbdlelis/Projeto-Loca-Facil.git) 
 - pip install scikit-image
+- pip install numpy
 - Para rodar o projeto, deve-se executar o arquivo Sever.py e depois o arquivo Root.py
 
 ## Tela Inicial
