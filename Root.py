@@ -24,6 +24,8 @@ import time
 import pickle
 from skimage.io import imsave, imread, imshow
 from functools import partial
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Ui_Main(QtWidgets.QWidget):
@@ -224,13 +226,20 @@ class Main(QMainWindow, Ui_Main):
         dicio = self.tela_verTodos.infos[numButton].copy()
         dicio['op'] = 'GetImages'
         self.conexao.sendMessage(pickle.dumps(dicio))
-        img_list = self.conexao.receiveMessage()
+        data = b''
+        while True:
+            packet = self.conexao.client_socket.recv(6144) 
+            data += packet
+            try:
+                received = pickle.loads(data)
+                break
+            except:
+                pass 
+        received = pickle.loads(data)
         self.conexao.closeConnection()
-        self.conexao.startConnection()
-        self.conexao.client_socket.recv(6144)
-        self.conexao.closeConnection()
-        for x in img_list:
+        for x in received.values():
             imshow(x)
+        plt.show(block = False)
         print('cliquei em', numButton)
 
 
@@ -372,6 +381,8 @@ class Main(QMainWindow, Ui_Main):
             return False
         else:
             self.tela_pesquisar.loadData(resp)
+            for x in range(len(self.tela_pesquisar.buttons)):
+                self.tela_pesquisar.buttons[x].clicked.connect(partial(self.pegarDados, x))
 
     def verTodos(self):
         dic = {}

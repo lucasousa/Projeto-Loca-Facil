@@ -7,6 +7,8 @@ from contato import EnviaEmail
 import pickle
 from skimage.io import imread, imsave, imshow
 from random import randint
+import matplotlib.pyplot as plt
+import os
 
 class ClientThread(threading.Thread):
     def __init__(self,clientAddress,clientsocket):
@@ -31,15 +33,20 @@ class ClientThread(threading.Thread):
         received = pickle.loads(data)
         ack = self.defineOP(received)
         print("Pacote recebido")
-        print (ack)
         if(type(ack) == bool):
             message = {
                 'status': 'success' if ack else 'error'
             }
         else:
             message = ack
-        print(message)
-        self.csocket.send(str(message).encode())
+        #print(message)
+        if(received['op'] == 'GetImages'):
+            imshow(message['imagem0'])
+            print(type(message['imagem0']))
+            dicio = pickle.dumps(message)
+            self.csocket.send(dicio)
+        else:
+            self.csocket.send(str(message).encode())
         self.csocket.close()
     
     def defineOP(self, dic):
@@ -137,14 +144,12 @@ class ClientThread(threading.Thread):
             self.db.connect()
             lista = self.db.select('origem', 'images', "id_rent = {}".format(dic['idrent']))
             self.db.disconnect()
-            print(dic)
-            image_list = []
+            image_list = {}
+            cont = 0
             for x in lista:
-                image_list.append(imread(x['origem']))
-            print(image_list)
-            pickle.dumps(image_list)
-                
-            return None
+                image_list['imagem{}'.format(cont)] = imread(x['origem'])
+                cont+=1
+            return image_list
 
 
     
