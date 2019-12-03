@@ -237,6 +237,8 @@ class Main(QMainWindow, Ui_Main):
         self.conexao.closeConnection()
         for x in received.values():
             imshow(x)
+        plt.xticks([])
+        plt.yticks([])
         plt.show(block = False)
         print('cliquei em', numButton)
 

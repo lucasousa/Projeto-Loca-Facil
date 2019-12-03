@@ -41,8 +41,8 @@ class ClientThread(threading.Thread):
             message = ack
         #print(message)
         if(received['op'] == 'GetImages'):
-            imshow(message['imagem0'])
-            print(type(message['imagem0']))
+            #imshow(message['imagem0'])
+            #print(type(message['imagem0']))
             dicio = pickle.dumps(message)
             self.csocket.send(dicio)
         else:
@@ -115,13 +115,20 @@ class ClientThread(threading.Thread):
         
         elif(dic['op'] == 'Pesquisar'):
             self.db.connect()
-            search = self.db.select("bairro, preco, rua", "rent", "bairro='{}'".format(dic['bairro'])) 
+            search = self.db.select("bairro, preco, rua, id_user", "rent", "bairro='{}'".format(dic['bairro']))
+            for x in search:
+                search1 = self.db.select("nome, telefone", "user", "iduser = {}".format(x['id_user']))
+                x.update(search1[0]) 
             return str(search) 
             self.db.disconnect() 
 
         elif(dic['op'] == 'verTodos'):
             self.db.connect()
             search = self.db.select("bairro, preco, rua, id_user, idrent", "rent") 
+            for x in search:
+                search1 = self.db.select("nome, telefone", "user", "iduser = {}".format(x['id_user']))
+                x.update(search1[0]) 
+            #print(search)
             return str(search) 
             self.db.disconnect()
 
@@ -135,7 +142,7 @@ class ClientThread(threading.Thread):
             for x in lista:
                 idrents.append(x['idrent'])
             dic['id'] = max(idrents)
-            print(dic)
+            #print(dic)
             self.db.insert_image(dic)
             self.db.disconnect()
             return True
