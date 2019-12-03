@@ -214,7 +214,7 @@ class Main(QMainWindow, Ui_Main):
         
         if(resp['status'] == 'success'): #busca no banco
             QtWidgets.QMessageBox.about(None, 'Ok!', 'Senha alterada com sucesso!')
-            self.AbrirTelaPrincipal()
+            self.AbrirTelaLogin()
         
         else:
             QtWidgets.QMessageBox.about(None, 'Erro', 'Dados inválidos')
@@ -267,7 +267,7 @@ class Main(QMainWindow, Ui_Main):
             resp = literal_eval(resp)
             #resp = literal_eval(self.conexao.receiveMessage())
             if(resp['status']=='success'):
-                QtWidgets.QMessageBox.about(None, 'Importante', 'Cadastro realizado com sucesso')
+                QtWidgets.QMessageBox.about(None, 'Importante', 'Até aqui tudo pronto, agora adicione algumas fotos do imóvel')
                 self.AbrirTelaCadastroFotos()
                 self.fotos = []  
                 self.tela_cadastrofoto.pushButton.clicked.connect(self.CadastroFotos)
@@ -289,6 +289,7 @@ class Main(QMainWindow, Ui_Main):
             self.conexao.startConnection()
             self.conexao.sendMessage(pickle.dumps(dic))
             self.conexao.closeConnection()
+        QtWidgets.QMessageBox.about(None, 'Importante', 'Imóvel cadastrado com sucesso!')   
         self.AbrirTelaPrincipal()
 
     def Contato(self):
