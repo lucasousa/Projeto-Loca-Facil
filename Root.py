@@ -199,7 +199,7 @@ class Main(QMainWindow, Ui_Main):
         dic['repetir'] = self.tela_recuperar_login.lineEdit_10.text()
         
         if((dic['senha'] != dic['repetir']) or len(dic['senha']) <=3 or len(dic['repetir']) <=3 ):
-            QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas devem ser iguais e maiores que 3 caracteres')
+            QtWidgets.QMessageBox.about(None, 'Erro', 'As senhas devem ser iguais ou maiores que 3 caracteres')
             return False
 
         if(len(dic['usuario']) <=2 or len(dic['cpf'])<11):
@@ -337,6 +337,7 @@ class Main(QMainWindow, Ui_Main):
             dic = {}
             dic['op'] = 'VerifyCadUser'
             dic['usuario'] = user
+            dic['cpf'] = cpf
             self.conexao.startConnection()
             self.conexao.sendMessage(pickle.dumps(dic))
             resp = self.conexao.client_socket.recv(6144).decode()
@@ -362,7 +363,7 @@ class Main(QMainWindow, Ui_Main):
                 QtWidgets.QMessageBox.about(None, 'Ok', 'Usuário cadastrado com sucesso')
                 self.AbrirTelaInicial()
             else:
-                QtWidgets.QMessageBox.about(None, 'Erro', 'Esse usuário já existe')
+                QtWidgets.QMessageBox.about(None, 'Erro', 'Esse usuário ou CPF já existe')
 
     def pesquisar(self):
         dic = {}

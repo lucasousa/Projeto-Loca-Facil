@@ -53,9 +53,10 @@ class ClientThread(threading.Thread):
         if(dic['op'] == 'VerifyCadUser'):
             self.db.connect()
             busca = self.db.select("usuario", "user", "usuario='{}'".format(dic['usuario']))
+            busca1 = self.db.select("cpf", "user", "cpf='{}'".format(dic['cpf']))
             self.db.disconnect()
             print(busca)
-            if(len(busca)==0):
+            if(len(busca)==0 and len(busca1)==0):
                 return True
             else:
                 return False
